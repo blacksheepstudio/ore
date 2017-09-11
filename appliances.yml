@@ -1,0 +1,29 @@
+orasky1:
+  inventory_file: "orasky1.py"
+  appliance_type: "sky"
+  ipaddress: "172.27.20.201"
+
+orasky2:
+  inventory_file: "orasky2.py"
+  appliance_type: "sky"
+  ipaddress: "172.27.20.202"
+
+orasky3:
+  inventory_file: "orasky3.py"
+  appliance_type: "sky"
+  ipaddress: "172.27.20.203"
+
+orasky4:
+  inventory_file: "orasky4.py"
+  appliance_type: "sky"
+  ipaddress: "172.27.20.204"
+
+orasky5:
+  inventory_file: "orasky5.py"
+  appliance_type: "sky"
+  ipaddress: "172.27.20.205"
+
+bopeep:
+  inventory_file: "bopeep.py"
+  appliance_type: "cds"
+  ipaddress: "172.16.29.161"

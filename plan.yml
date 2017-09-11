@@ -1,0 +1,47 @@
+# Connector paths
+
+connectors:
+  trunk: "https://garfield.build.actifio.com/files/builds/cdsky/trunk/8.0.0/8.0.0.1318/"
+  sp713: "https://garfield.build.actifio.com/files/builds/cdsky/sp-7.1.3/7.1.3/7.1.3.273/"
+  sp715: "https://garfield.build.actifio.com/files/builds/cdsky/sp-7.1.5/7.1.5/7.1.5.403/"
+
+#Linux
+
+rh66orarac1:
+  branch: trunk
+  appliance: orasky3
+
+ore-rhel11g-1:
+  branch: trunk
+  appliance: orasky3
+
+ndm4-vm:
+  branch: trunk
+  appliance: orasky3
+#
+## AIX
+#
+bb6aix3:
+  branch: trunk
+  appliance: bopeep
+
+nstlpar24:
+  branch: trunk
+  appliance: bopeep
+#
+## HPUX
+#
+hpvm1:
+  branch: trunk
+  appliance: bopeep
+
+# Solaris
+#
+#sun08-01:
+#  branch:
+#  appliance: orasky1
+#
+sun08-03:
+  branch: trunk
+  appliance: orasky1
+

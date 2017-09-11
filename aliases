@@ -1,0 +1,39 @@
+[hpvm1_hpracdb]
+inv/appliance/bopeep.py inv/host/hpvm1.py:host1 inv/host/hpvm1.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[hpvm1_ora111db]
+inv/appliance/bopeep.py inv/host/hpvm1-ora111db.py:host1 inv/host/hpvm1-ora111db.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[hpvm1_orafsdb]
+inv/appliance/bopeep.py inv/host/hpvm1-orafsdb.py:host1 inv/host/hpvm1-orafsdb.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[bb6aix3_bb12rcdb]
+inv/appliance/bopeep.py inv/host/bb6aix3.py:host1 inv/host/bb6aix3.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[ore-rhel11g-1_oriondb]
+inv/appliance/orasky3.py inv/host/ore-rhel11g-1.py:host1 inv/host/ore-rhel11g-1.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[ndm4-vm_ort205db]
+inv/appliance/orasky3.py inv/host/ndm4-vm-ort205db.py:host1 inv/host/ndm4-vm-ort205db.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[ndm4-vm_tengfs]
+inv/appliance/orasky3.py inv/host/ndm4-vm-tengfs.py:host1 inv/host/ndm4-vm-tengfs.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[sun08-03_sol12pdb]
+inv/appliance/orasky1.py inv/host/sun08-03.py:host1 inv/host/sun08-03.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[nstlpar24_autodb]
+inv/appliance/bopeep.py inv/host/NSTLPAR24_KT.py:host1 inv/host/NSTLPAR24_KT.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[nstlpar24_ora111db]
+inv/appliance/bopeep.py inv/host/NSTLPAR24_ora111db.py:host1 inv/host/NSTLPAR24_ora111db.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[nstlpar24_ten205db]
+inv/appliance/bopeep.py inv/host/NSTLPAR24_ten205db1.py:host1 inv/host/NSTLPAR24_ten205db1.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[rh66orarac1_demondb]
+inv/appliance/orasky3.py inv/host/rh66orarac1.py:host1 inv/host/rh66orarac1.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[rh66orarac1_ora111db]
+inv/appliance/orasky3.py inv/host/rh66orarac1-ora111db.py:host1 inv/host/rh66orarac1-ora111db.py:host2 suites/ora2/logsmart_mounts1.robot
+

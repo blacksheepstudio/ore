@@ -1,0 +1,30 @@
+platform_formats:
+  HPUX: "depot"
+  Solaris: "pkg"
+  Linux: "rpm"
+  AIX: "bff"
+
+platform_names:
+  HPUX: "HPUX"
+  Solaris: "Solaris_SPARC"
+  Linux: "Linux"
+  AIX: "AIX"
+
+uninstall_commands:
+  HPUX: "swremove udsagent"
+  Solaris: "sed -e 's/ask/nocheck/g' /var/sadm/install/admin/default > /var/sadm/install/admin/default.new; pkgrm -n -a /var/sadm/install/admin/default.new udsagent"
+  Linux: "rpm -e udsagent"
+  AIX: "installp -u udsagent"
+
+curl_binaries:
+  HPUX: "cd /tmp; curl -O -k -f"
+  Solaris: "cd /tmp; curl -O -k -f"
+  Linux: "cd /tmp; curl -O -k -f"
+  # Download wget by using rpm -Uvh ftp://ftp.software.ibm.com/aix/freeSoftware/aixtoolbox/RPMS/ppc/wget/wget-1.9-2.aix5.1.ppc.rpm
+  AIX: "cd /tmp; wget"
+
+install_commands:
+  HPUX: "swinstall -s FILENAME \\*"
+  Solaris: "sed -e 's/ask/nocheck/g' /var/sadm/install/admin/default > /var/sadm/install/admin/default.new; pkgadd -n -a /var/sadm/install/admin/default.new -d FILENAME all"
+  Linux: "rpm -ivh FILENAME"
+  AIX: "installp -aXgd FILENAME all"

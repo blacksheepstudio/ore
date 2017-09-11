@@ -1,0 +1,159 @@
+# AIX
+nstlpar24:
+  ipaddress: "172.27.8.90"
+  platform: "AIX"
+  databases:
+    - autodb:
+        inventory_file: "NSTLPAR24_KT.py"
+        oracle_sid: "autodb1"
+        oracle_home: "/database/11.2.0/product/dbhome_1"
+        version: "11.2"
+        testlink_platform: "AIX 6.1 Oracle 11g RAC ASM"
+
+    - ora111db:
+        inventory_file: "NSTLPAR24_ora111db.py"
+        oracle_sid: "ora111db"
+        oracle_home: "/home/oracle/app/product/11.1.0"
+        version: "11.1"
+        testlink_platform: "AIX 6.1 Oracle 11g RAC ASM"
+
+    - ten205db:
+        inventory_file: "NSTLPAR24_ten205db1.py"
+        oracle_sid: "ten205db1"
+        oracle_home: "/ora10gr2home/db/OraHome_1"
+        version: "10.5"
+        testlink_platform: "AIX 6.1 Oracle 10g RAC ASM"
+
+bb6aix3:
+  ipaddress: "172.16.199.53"
+  platform: "AIX"
+  databases:
+    - bb12rcdb:
+        inventory_file: "bb6aix3.py"
+        oracle_sid: "bb12rcdb1"
+        oracle_home: "/oracle/12.1.0/product/dbhome_1"
+        version: "12.1"
+        testlink_platform: "AIX 6.1 Oracle 12c RAC ASM"
+
+# Solaris
+sun08-01:
+  ipaddress: "172.27.20.11"
+  platform: "Solaris"
+  databases:
+    - soldb:
+        inventory_file: "sun08-01.py"
+        oracle_sid: "soldb1"
+        oracle_home: "/oracle/product/11.2.0/dbhome_1"
+        version: "11.2"
+        testlink_platform: "Solaris 11.3 Oracle 11g RAC ASM"
+
+    - ora111db:
+        inventory_file: "sun08-01-ora111db.py"
+        oracle_sid: "ora111db"
+        oracle_home: "/oracle/product/11.1.0"
+        version: "11.1"
+        testlink_platform: "Solaris 11.3 Oracle 11g RAC ASM"
+
+    - tensoldb:
+        inventory_file: "sun08-01-tensoldb.py"
+        oracle_sid: "tensoldb1"
+        oracle_home: "/oracle/product/10.2.0/db_1"
+        version: "10.5"
+        testlink_platform: "Solaris 11.3 Oracle 10g RAC ASM"
+
+sun08-03:
+  ipaddress: "172.27.20.18"
+  platform: "Solaris"
+  databases:
+    - sol12pdb:
+        inventory_file: "sun08-03.py"
+        oracle_sid: "sol12pdb1"
+        oracle_home: "/oracle/12.1.0/product/dbhome_1"
+        version: "12.1"
+        testlink_platform: "Solaris 11.3 Oracle 12c RAC ASM"
+
+# Linux
+rh66orarac1:
+  ipaddress: "172.27.13.125"
+  platform: "Linux"
+  databases:
+    - demondb:
+        inventory_file: "rh66orarac1.py"
+        oracle_sid: "demondb1"
+        oracle_home: "/database/oracle/app/oracle/product/11.2.0/dbhome_1"
+        version: "11.2"
+        testlink_platform: "RH 6 Oracle 11g RAC ASM"
+
+    - ora111db:
+        inventory_file: "rh66orarac1-ora111db.py"
+        oracle_sid: "ora111db1"
+        oracle_home: "/database/oracle/app/oracle/product/11.1.0/dbhome_1"
+        version: "11.1"
+        testlink_platform: "RH 6 Oracle 11g RAC ASM"
+
+ndm4-vm:
+  ipaddress: "172.27.11.211"
+  platform: "Linux"
+  databases:
+    - ort205db:
+        inventory_file: "ndm4-vm-ort205db.py"
+        oracle_sid: "ort205db1"
+        oracle_home: "/u01/app/oracle/product/10.2.0/db_1"
+        version: "10.5"
+        testlink_platform: "RH 6 Oracle 10g RAC ASM"
+
+    - tengfs:
+        inventory_file: "ndm4-vm-tengfs.py"
+        oracle_sid: "tengfs"
+        oracle_home: "/u01/app/oracle/product/10.2.0/db_1"
+        version: "10.5"
+        testlink_platform: "RH 6 Oracle 10g RAC FS"
+
+ore-rhel11g-1:
+  ipaddress: "172.27.20.246"
+  platform: "Linux"
+  databases:
+    - oriondb:
+        inventory_file: "ore-rhel11g-1.py"
+        oracle_sid: "oriondb"
+        oracle_home: "/u01/app/oracle/product/11.2.0.3/db_1"
+        version: "11.2"
+        testlink_platform: "RH 6 Oracle 11g FS"
+
+# HPUX
+hpvm1:
+  ipaddress: "172.16.159.162"
+  platform: "HPUX"
+  databases:
+    - hpracdb:
+        inventory_file: "hpvm1.py"
+        oracle_sid: "hpracdb1"
+        oracle_home: "/orahome/app/11.2.0/product/dbhome_1"
+        version: "11.2"
+        testlink_platform: "HPUX 11.31 Oracle 11g ASM"
+
+    - ora111db:
+        inventory_file: "hpvm1-ora111db.py"
+        oracle_sid: "ora111db1"
+        oracle_home: "/orahome/oracle/product/11.1.0"
+        version: "11.1"
+        testlink_platform: "HPUX 11.31 Oracle 11g RAC ASM"
+
+    - orafsdb:
+        inventory_file: "hpvm1-orafsdb.py"
+        oracle_sid: "orafsdb"
+        oracle_home: "/orahome/app/11.2.0/product/dbhome_1"
+        version: "11.2"
+        testlink_platform: "HPUX 11g FS"
+
+
+hpvm21:
+  ipaddress: "172.16.159.73"
+  platform: "HPUX"
+  databases:
+    - hp121pdb:
+        inventory_file: "hpvm21.py"
+        oracle_sid: "hp121pdb1"
+        oracle_home: "/oracle/12.1.0/product/dbhome_1"
+        version: "12.1"
+        testlink_platform: "HPUX 12c RAC ASM"

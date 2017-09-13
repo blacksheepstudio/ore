@@ -99,7 +99,11 @@ class UpgradeController(object):
         :param config:  e.g. 'trunk'. Defined in plan.yml
         :return:
         """
-        ipaddress = self.oracle_servers[host_name]['ipaddress']
+        try:
+            ipaddress = self.oracle_servers[host_name]['ipaddress']
+        except KeyError('Oracle server named: {0} not found in yml'.format(host_name)):
+            return 1
+
         platform = self.oracle_servers[host_name]['platform']
         gpg_path = self.test_plan['connectors'][config]
         curl_string = self.connectors['curl_binaries'][platform]
@@ -128,6 +132,7 @@ class UpgradeController(object):
         curl_string = '{0} {1}'.format(curl_string, gpg_full_path)
         print('Command: {0}'.format(curl_string))
         out, err, rc = a.raw(curl_string)
+        print(rc)
         # If 404 error occurs
         if rc == 1:
             print('** ERROR: CURL could not find {0}. Skipping this host... **'.format(gpg_full_path))
@@ -139,7 +144,7 @@ class UpgradeController(object):
         uninstall_command = self.connectors['uninstall_commands'][platform]
         print('Command: {0}'.format(uninstall_command))
         out, err, rc = a.raw(uninstall_command)
-        # print(out, err, rc)
+        print(rc)
 
         # Install latest connector
         print('Install connector ****')
@@ -148,7 +153,7 @@ class UpgradeController(object):
         install_command = install_command.replace('FILENAME', file_path)
         print('Command: {0}'.format(install_command))
         out, err, rc = a.raw(install_command)
-        print(out, err, rc)
+        print(rc)
 
         print('Cat /act/etc/key.txt ****')
         out, err, rc = a.raw('cat /act/etc/key.txt')

@@ -30,7 +30,7 @@ class CSVGenerator(object):
         self.test_plan = ymls.test_plan
         self.connectors = ymls.connectors
 
-    def create_csv(self):
+    def create_csv(self, filename='plan.csv'):
         column_labels = ['platform', 'testlink_platform', 'oracle_version', 'oracle_sid', 'host_name', 'ipaddress',
                           'uds_version', 'appliance', 'result', 'notes']
 
@@ -51,7 +51,7 @@ class CSVGenerator(object):
         final_rows.sort(key=lambda x: x[0])
         final_rows.insert(0, column_labels)
 
-        with open('plan.csv', 'w') as myfile:
+        with open(filename, 'w') as myfile:
             wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
             for row in final_rows:
                 wr.writerow(row)
@@ -380,13 +380,12 @@ def print_help():
     print('')
 
 if __name__ == '__main__':
-    tp = TestPlanner()
-    uc = UpgradeController()
     oc = OracleCleaner()
 
     if len(sys.argv) > 1:
         arg = sys.argv[1]
         if arg.lower() in ['upgradehosts']:
+            uc = UpgradeController()
             uc.upgrade_connectors()
         elif arg.lower() in ['cleanuplogs', 'rmlogs']:
             if sys.argv[2] in ['all', '-a', '-A', 'a', 'A']:
@@ -414,28 +413,41 @@ if __name__ == '__main__':
             if len(sys.argv) < 4:
                 print('Format: ore upgradehost <hostname> <branch>')
             else:
+                uc = UpgradeController()
                 uc.upgrade_connector(sys.argv[2], sys.argv[3])
         elif arg.lower() in ['aliases']:
+            tp = TestPlanner()
             if len(sys.argv) > 2:
                 tp.create_aliases(filename=sys.argv[2])
             else:
                 tp.create_aliases()
         elif arg.lower() in ['mkcsv']:
-            a = CSVGenerator()
-            print('Generating test plan CSV')
-            a.create_csv()
+            if len(sys.argv) > 2:
+                filename = sys.argv[2]
+                if '.csv' not in filename:
+                    filename += '.csv'
+                a = CSVGenerator()
+                print('Generating test plan CSV')
+                a.create_csv(filename)
+            else:
+                print('Format should be: ore mkcsv <filename.csv>')
         elif arg.lower() in ['testplan', 'plan']:
+            tp = TestPlanner()
             pprint.pprint(tp.test_plan)
         elif arg.lower() in ['appliances', 'appliance']:
+            tp = TestPlanner()
             pprint.pprint(tp.appliances)
         elif arg.lower() in ['databases', 'hosts', 'servers']:
+            tp = TestPlanner()
             pprint.pprint(tp.oracle_servers)
         elif arg.lower() in ['hostinfo', 'lshost', 'ls']:
             if len(sys.argv) > 2:
+                uc = UpgradeController()
                 uc.print_host_info(sys.argv[2])
             else:
                 print('Specify hostname')
         elif arg.lower() in ['lshosts']:
+            uc = UpgradeController()
             hosts = [host for host in oc.test_plan.keys() if host != 'connectors']
             for host in hosts:
                 print('**** {0}'.format(host))

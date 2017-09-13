@@ -5,6 +5,7 @@ import atexit
 import logging
 import sys
 import pprint
+import OracleLib
 
 
 class YamlLoader(object):
@@ -14,6 +15,54 @@ class YamlLoader(object):
         self.appliances = yaml.load(open(appliances_file))
         self.test_plan = yaml.load(open(plan_yml))
         self.connectors = yaml.load(open(connectors_file))
+
+
+class OracleCleaner(object):
+    def __init__(self):
+        ymls = YamlLoader()
+        self.oracle_servers = ymls.oracle_servers
+        self.appliances = ymls.appliances
+        self.test_plan = ymls.test_plan
+        self.connectors = ymls.connectors
+
+    def cleanup_diag(self, host_name, test=True):
+        ipaddress, password, homes, sids = self._get_oraclelib_params(host_name)
+
+        for i, sid in enumerate(sids):
+            oracle_connection = OracleLib.OracleLib(ipaddress, sid=sids[i], home=homes[i], password=password)
+            diag_dest = oracle_connection.query("select value from v\$parameter where "
+                                                "name like '%background_dump_dest%'")[0]['VALUE'].strip('/trace')
+            print('Executing: rm -rf /{0}/alert/*; rm -rf /{0}/trace/*'.format(diag_dest))
+            if not test:
+                ##### Safety procedures
+                try:
+                    assert sid in diag_dest or 'log' in diag_dest
+                    assert diag_dest != '/'
+                    oracle_connection.issue_command_as_root('rm -rf /{0}/audit/*; '
+                                                            'rm -rf /{0}/trace/*'.format(diag_dest))
+                except AssertionError:
+                    print('- - WARNING: invalid diag dest: {0}'.format(diag_dest))
+                    print('- - diag dest seems unsafe to rm -rf, Skipping ...')
+                    continue
+
+    def cleanup_archivelogs(self, host_name):
+        ipaddress, password, homes, sids = self._get_oraclelib_params(host_name)
+
+        for i, sid in enumerate(sids):
+            oracle_connection = OracleLib.OracleLib(ipaddress, sid=sids[i], home=homes[i], password=password)
+            print('*** Cleaning up logs for {0}'.format(sid))
+            r = oracle_connection.rman_cmd('crosscheck archivelog all; delete noprompt archivelog all;')
+            print(r)
+
+    def _get_oraclelib_params(self, host_name):
+        ipaddress = self.oracle_servers[host_name]['ipaddress']
+        try:
+            password = self.oracle_servers[host_name]['oracle_pass']
+        except KeyError:
+            password = '12!pass345'
+        homes = [database.values()[0]['oracle_home'] for database in self.oracle_servers[host_name]['databases']]
+        sids = [database.values()[0]['oracle_sid'] for database in self.oracle_servers[host_name]['databases']]
+        return ipaddress, password, homes, sids
 
 
 class TestPlanner(object):
@@ -81,12 +130,23 @@ class UpgradeController(object):
         self.test_plan = ymls.test_plan
         self.connectors = ymls.connectors
 
+    def print_host_info(self, host_name):
+        connector, platform, databases = self.get_host_info(host_name)
+        print('- connector version: . . {0}'.format(connector))
+        print('- platform . . . . . . . {0}'.format(platform))
+        print('- databases processes  . {0}'.format(databases))
+
     def get_host_info(self, host_name):
         ipaddress = self.oracle_servers[host_name]['ipaddress']
         platform = self.oracle_servers[host_name]['platform']
         a = HostConnection(ipaddress)
+
+        # Show connector version
         connector = a.raw('cat /act/etc/key.txt')[0][0].strip('\n')
-        databases = [database.keys()[0] for database in self.oracle_servers[host_name]['databases']]
+
+        # List all running databases
+        r = a.raw('ps -ef | grep [p]mon')
+        databases = [line.split('pmon_')[1].strip('\n') for line in r[0]]
         return connector, platform, databases
 
     def upgrade_connector(self, host_name, config):
@@ -264,6 +324,10 @@ def print_help():
     print('ore upgradehost <hostname> <branch>: upgrade a single host')
     print('ore lshost <hostname>: print host information')
     print('')
+    print('ore cleanuplogs <hostname>: cleans up archivelogs')
+    print('ore cleanupdiag <hostname>: cleans up trace, audit files')
+    print('ore cleanup<type> all: cleans up all hosts in databases.yml')
+    print('')
     print('ore aliases <filename>: create aliases file for use with rbc')
     print('')
     print('ore testplan : prints the oracle test plan to the screen')
@@ -274,11 +338,34 @@ def print_help():
 if __name__ == '__main__':
     tp = TestPlanner()
     uc = UpgradeController()
+    oc = OracleCleaner()
 
     if len(sys.argv) > 1:
         arg = sys.argv[1]
         if arg.lower() in ['upgradehosts']:
             uc.upgrade_connectors()
+        elif arg.lower() in ['cleanuplogs', 'rmlogs']:
+            if sys.argv[2] in ['all', '-a', '-A', 'a', 'A']:
+                hosts = [host for host in oc.test_plan.keys() if host != 'connectors']
+                for host in hosts:
+                    print('**** {0}'.format(host))
+                    oc.cleanup_archivelogs(host)
+            else:
+                try:
+                    oc.cleanup_archivelogs(sys.argv[2])
+                except KeyError:
+                    print('Host not found!')
+        elif arg.lower() in ['cleanupdiag', 'cleandiag', 'rmdiag']:
+            if sys.argv[2] in ['all', '-a', '-A', 'a', 'A']:
+                hosts = [host for host in oc.test_plan.keys() if host != 'connectors']
+                for host in hosts:
+                    print('**** {0}'.format(host))
+                    oc.cleanup_diag(host, test=False)
+            else:
+                try:
+                    oc.cleanup_diag(sys.argv[2], test=False)
+                except KeyError:
+                    print('Host not found!')
         elif arg.lower() in ['upgradehost', 'upgrade']:
             if len(sys.argv) < 4:
                 print('Format: ore upgradehost <hostname> <branch>')
@@ -297,9 +384,14 @@ if __name__ == '__main__':
             pprint.pprint(tp.oracle_servers)
         elif arg.lower() in ['hostinfo', 'lshost', 'ls']:
             if len(sys.argv) > 2:
-                pprint.pprint(uc.get_host_info(sys.argv[2]))
+                uc.print_host_info(sys.argv[2])
             else:
                 print('Specify hostname')
+        elif arg.lower() in ['lshosts']:
+            hosts = [host for host in oc.test_plan.keys() if host != 'connectors']
+            for host in hosts:
+                print('**** {0}'.format(host))
+                uc.print_host_info(host)
         else:
             print_help()
     else:

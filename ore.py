@@ -6,6 +6,7 @@ import logging
 import sys
 import pprint
 import OracleLib
+import csv
 
 
 class YamlLoader(object):
@@ -15,6 +16,45 @@ class YamlLoader(object):
         self.appliances = yaml.load(open(appliances_file))
         self.test_plan = yaml.load(open(plan_yml))
         self.connectors = yaml.load(open(connectors_file))
+
+
+class CSVGenerator(object):
+    """
+    Generates a CSV of the current test plan
+    """
+    def __init__(self, plan='plan.yml'):
+        self.plan = plan
+        ymls = YamlLoader()
+        self.oracle_servers = ymls.oracle_servers
+        self.appliances = ymls.appliances
+        self.test_plan = ymls.test_plan
+        self.connectors = ymls.connectors
+
+    def create_csv(self):
+        column_labels = ['platform', 'testlink_platform', 'oracle_version', 'oracle_sid', 'host_name', 'ipaddress',
+                          'uds_version', 'appliance', 'result', 'notes']
+
+        final_rows = []
+        host_names = [host for host in oc.test_plan.keys() if host != 'connectors']
+        for host_name in host_names:
+            ipaddress = self.oracle_servers[host_name]['ipaddress']
+            platform = self.oracle_servers[host_name]['platform']
+            uds_version = self.test_plan[host_name]['branch']
+            appliance = self.test_plan[host_name]['appliance']
+
+            for database in self.oracle_servers[host_name]['databases']:
+                oracle_sid = database.values()[0]['oracle_sid']
+                oracle_version = database.values()[0]['version']
+                testlink_platform = database.values()[0]['testlink_platform']
+                final_rows.append([platform, testlink_platform, oracle_version, oracle_sid, host_name, ipaddress, uds_version, appliance,
+                                  '', ''])
+        final_rows.sort(key=lambda x: x[0])
+        final_rows.insert(0, column_labels)
+
+        with open('plan.csv', 'w') as myfile:
+            wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+            for row in final_rows:
+                wr.writerow(row)
 
 
 class OracleCleaner(object):
@@ -319,6 +359,8 @@ class HostConnection(object):
 def print_help():
     print('')
     print('*** Oracle Regression Environment Manager ***')
+    print('TestPlan commands:')
+    print(' ore mkcsv: create blank testplan csv file')
     print('Upgrade commands:')
     print(' ore upgradehosts: upgrade host connectors according to testplan')
     print(' ore upgradehost <hostname> <branch>: upgrade a single host')
@@ -378,6 +420,10 @@ if __name__ == '__main__':
                 tp.create_aliases(filename=sys.argv[2])
             else:
                 tp.create_aliases()
+        elif arg.lower() in ['mkcsv']:
+            a = CSVGenerator()
+            print('Generating test plan CSV')
+            a.create_csv()
         elif arg.lower() in ['testplan', 'plan']:
             pprint.pprint(tp.test_plan)
         elif arg.lower() in ['appliances', 'appliance']:

@@ -81,6 +81,14 @@ class UpgradeController(object):
         self.test_plan = ymls.test_plan
         self.connectors = ymls.connectors
 
+    def get_host_info(self, host_name):
+        ipaddress = self.oracle_servers[host_name]['ipaddress']
+        platform = self.oracle_servers[host_name]['platform']
+        a = HostConnection(ipaddress)
+        connector = a.raw('cat /act/etc/key.txt')[0][0].strip('\n')
+        databases = [database.keys()[0] for database in self.oracle_servers[host_name]['databases']]
+        return connector, platform, databases
+
     def upgrade_connector(self, host_name, config):
         """
         performs 3 tasks:
@@ -249,6 +257,7 @@ def print_help():
     print('HELP:')
     print('ore upgradehosts: upgrade host connectors according to testplan')
     print('ore upgradehost <hostname> <branch>: upgrade a single host')
+    print('ore lshost <hostname>: print host information')
     print('')
     print('ore aliases <filename>: create aliases file for use with rbc')
     print('')
@@ -281,6 +290,11 @@ if __name__ == '__main__':
             pprint.pprint(tp.appliances)
         elif arg.lower() in ['databases', 'hosts', 'servers']:
             pprint.pprint(tp.oracle_servers)
+        elif arg.lower() in ['hostinfo', 'lshost', 'ls']:
+            if len(sys.argv) > 2:
+                pprint.pprint(uc.get_host_info(sys.argv[2]))
+            else:
+                print('Specify hostname')
         else:
             print_help()
     else:

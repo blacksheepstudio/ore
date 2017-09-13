@@ -120,6 +120,17 @@ ore-rhel11g-1:
         version: "11.2"
         testlink_platform: "RH 6 Oracle 11g FS"
 
+ora12c1:
+  ipaddress: "172.17.200.213"
+  platform: "Linux"
+  databases:
+    - ora12hdb:
+        inventory_file: "ora12c1.py"
+        oracle_sid: "ora12hdb1"
+        oracle_home: "/oracle/app/12.2.0/dbhome_1"
+        version: "12.2"
+        testlink_platform: "RH 7 Oracle 12c RAC ASM"
+
 # HPUX
 hpvm1:
   ipaddress: "172.16.159.162"
@@ -130,7 +141,7 @@ hpvm1:
         oracle_sid: "hpracdb1"
         oracle_home: "/orahome/app/11.2.0/product/dbhome_1"
         version: "11.2"
-        testlink_platform: "HPUX 11.31 Oracle 11g ASM"
+        testlink_platform: "HPUX 11.31 Oracle 11g RAC ASM"
 
     - ora111db:
         inventory_file: "hpvm1-ora111db.py"
@@ -147,12 +158,12 @@ hpvm1:
         testlink_platform: "HPUX 11g FS"
 
 
-hpvm21:
+hpdbvm21:
   ipaddress: "172.16.159.73"
   platform: "HPUX"
   databases:
     - hp121pdb:
-        inventory_file: "hpvm21.py"
+        inventory_file: "hpdbvm21.py"
         oracle_sid: "hp121pdb1"
         oracle_home: "/oracle/12.1.0/product/dbhome_1"
         version: "12.1"

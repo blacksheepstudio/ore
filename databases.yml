@@ -2,6 +2,7 @@
 nstlpar24:
   ipaddress: "172.27.8.90"
   platform: "AIX"
+  oracle_pass: "12!pass345"
   databases:
     - autodb:
         inventory_file: "NSTLPAR24_KT.py"
@@ -155,7 +156,7 @@ hpvm1:
         oracle_sid: "orafsdb"
         oracle_home: "/orahome/app/11.2.0/product/dbhome_1"
         version: "11.2"
-        testlink_platform: "HPUX 11g FS"
+        testlink_platform: "HPUX 11.31 Oracle 11g FS"
 
 
 hpdbvm21:

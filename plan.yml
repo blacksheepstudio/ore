@@ -45,12 +45,12 @@ hpdbvm21:
   appliance: bopeep
 
 # Solaris
-#
-#sun08-01:
-#  branch:
-#  appliance: orasky1
-#
-#sun08-03:
-#  branch: trunk
-#  appliance: orasky1
+
+sun08-01:
+  branch: trunk
+  appliance: orasky1
+
+sun08-03:
+  branch: trunk
+  appliance: orasky1
 

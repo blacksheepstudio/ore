@@ -7,6 +7,7 @@ import sys
 import pprint
 import OracleLib
 import csv
+import os
 
 
 class YamlLoader(object):
@@ -16,6 +17,30 @@ class YamlLoader(object):
         self.appliances = yaml.load(open(appliances_file))
         self.test_plan = yaml.load(open(plan_yml))
         self.connectors = yaml.load(open(connectors_file))
+
+
+class ScriptExecutor(object):
+    def __init__(self):
+        ymls = YamlLoader()
+        self.oracle_servers = ymls.oracle_servers
+        self.appliances = ymls.appliances
+        self.test_plan = ymls.test_plan
+        self.connectors = ymls.connectors
+
+    def execute_permissions_check(self, host_name):
+        ipaddress = self.oracle_servers[host_name]['ipaddress']
+        connection = HostConnection(ipaddress)
+
+        print('** Sending scripts to {0}'.format(host_name))
+        r = connection.scp_script('host_scripts/chkperms.sh')
+        r = connection.scp_script('host_scripts/chkperms.txt')
+
+        print('** Executing: /tmp/chkperms.sh')
+        r = connection.raw('chmod 777 /tmp/chkperms.sh; chmod 777 /tmp/chkperms.txt')
+        r = connection.raw('cd /tmp; ./chkperms.sh')
+        print(r[1])
+        for line in r[0]:
+            print(line.strip('\n'))
 
 
 class CSVGenerator(object):
@@ -293,6 +318,14 @@ class HostConnection(object):
         # Connect
         self.client = None
 
+    def scp_script(self, path):
+        if not self.client:
+            self.client = self.connect()
+
+        sftp = self.client.open_sftp()
+        filename =  path.split('/')[-1]
+        sftp.put(path, '/tmp/{0}'.format(filename))
+
     def raw(self, command, ignore_error=False):
         """
         Wrapper for paramiko exec_command
@@ -415,6 +448,12 @@ if __name__ == '__main__':
             else:
                 uc = UpgradeController()
                 uc.upgrade_connector(sys.argv[2], sys.argv[3])
+        elif arg.lower() in ['execute', 'script']:
+            if len(sys.argv) < 3:
+                print('Format: ore script <hostname> <script_path>')
+            else:
+                se = ScriptExecutor()
+                se.execute_permissions_check(sys.argv[2])
         elif arg.lower() in ['aliases']:
             tp = TestPlanner()
             if len(sys.argv) > 2:

@@ -7,7 +7,6 @@ import sys
 import pprint
 import OracleLib
 import csv
-import os
 
 
 class YamlLoader(object):
@@ -450,10 +449,14 @@ if __name__ == '__main__':
                 uc.upgrade_connector(sys.argv[2], sys.argv[3])
         elif arg.lower() in ['execute', 'script']:
             if len(sys.argv) < 3:
-                print('Format: ore script <hostname> <script_path>')
+                print('Format: ore script <hostname> <script_name>')
+                print('Scripts: permissions, ')
             else:
                 se = ScriptExecutor()
-                se.execute_permissions_check(sys.argv[2])
+                if sys.argv[3] == 'permissions':
+                    se.execute_permissions_check(sys.argv[2])
+                else:
+                    print('Unknown script name')
         elif arg.lower() in ['aliases']:
             tp = TestPlanner()
             if len(sys.argv) > 2:

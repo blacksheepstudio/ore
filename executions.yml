@@ -1,0 +1,62 @@
+suites:
+  osauth_mounts:
+    robot_file: suites/ora2/logsmart_mounts1.robot
+    variables:
+    host_needs:
+  dbauth_mounts:
+    robot_file: suites/ora2/logsmart_mounts1.robot
+    variables:
+  osauth_asasm_mounts:
+    robot_file: suites/ora2/logsmart_mounts1.robot
+    variables:
+    requirements:
+
+
+
+  dbauth_asasm_mounts: suites/ora2/logsmart_mounts1.robot
+  osauth_asfs_mounts: suites/ora2/logsmart_mounts1.robot
+  dbauth_asfs_mounts: suites/ora2/logsmart_mounts1.robot
+  osauth_nonlogsmart_mounts: suites/ora2/logsmart_mounts1.robot
+  dbauth_nonlogsmart_mounts: suites/ora2/logsmart_mounts1.robot
+
+# Each wave is a set of test executions using robot framwork
+waves:
+  wave1a:
+    label: 11gr1 osauth
+    executions:
+      - nstlpar24:
+          database: ora111db
+          suite: osauth_asfs_mounts
+      - sun08-01:
+          database: ora111db
+          suite: osauth_mounts
+      - rh66orarac1:
+          database: ora111db
+          suite: osauth_asfs_mounts
+      - hpvm1:
+          database: ora111db
+          suite: osauth_mounts
+
+  wave1b:
+    label: 10g and 12c
+    executions:
+      - ndm4-vm:
+          database: ort205db
+          suite: osauth_mounts
+      -
+
+  wave2a:
+    label: 11gr1 dbauth
+    executions:
+      - nstlpar24:
+          database: ora111db
+          suite: dbauth_mounts
+      - sun08-01:
+          database: ora111db
+          suite: dbauth_asfs_mounts
+      - rh66orarac1:
+          database: ora111db
+          suite: dbauth_mounts
+      - hpvm1:
+          database: ora111db
+          suite: dbauth_asfs_mounts

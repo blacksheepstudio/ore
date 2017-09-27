@@ -94,20 +94,24 @@ class OracleCleaner(object):
 
         for i, sid in enumerate(sids):
             oracle_connection = OracleLib.OracleLib(ipaddress, sid=sids[i], home=homes[i], password=password)
-            diag_dest = oracle_connection.query("select value from v\$parameter where "
-                                                "name like '%background_dump_dest%'")[0]['VALUE'].strip('/trace')
-            print('Executing: rm -rf /{0}/alert/*; rm -rf /{0}/trace/*'.format(diag_dest))
-            if not test:
-                ##### Safety procedures
-                try:
-                    assert sid in diag_dest or 'log' in diag_dest
-                    assert diag_dest != '/'
-                    oracle_connection.issue_command_as_root('rm -rf /{0}/audit/*; '
-                                                            'rm -rf /{0}/trace/*'.format(diag_dest))
-                except AssertionError:
-                    print('- - WARNING: invalid diag dest: {0}'.format(diag_dest))
-                    print('- - diag dest seems unsafe to rm -rf, Skipping ...')
-                    continue
+            try:
+                diag_dest = oracle_connection.query("select value from v\$parameter where "
+                                                    "name like '%background_dump_dest%'")[0]['VALUE'].strip('/trace')
+                print('Executing: rm -rf /{0}/alert/*; rm -rf /{0}/trace/*'.format(diag_dest))
+                if not test:
+                    ##### Safety procedures
+                    try:
+                        assert sid in diag_dest or 'log' in diag_dest
+                        assert diag_dest != '/'
+                        oracle_connection.issue_command_as_root('rm -rf /{0}/audit/*; '
+                                                                'rm -rf /{0}/trace/*'.format(diag_dest))
+                    except AssertionError:
+                        print('- - WARNING: invalid diag dest: {0}'.format(diag_dest))
+                        print('- - diag dest seems unsafe to rm -rf, Skipping ...')
+                        continue
+            except OracleLib.OracleError as e:
+                print('Something went wrong with DB: {0}'.format(sid))
+                print('Message: {0}'.format(e.errormessage))
 
     def cleanup_archivelogs(self, host_name):
         ipaddress, password, homes, sids = self._get_oraclelib_params(host_name)
@@ -115,8 +119,13 @@ class OracleCleaner(object):
         for i, sid in enumerate(sids):
             oracle_connection = OracleLib.OracleLib(ipaddress, sid=sids[i], home=homes[i], password=password)
             print('*** Cleaning up logs for {0}'.format(sid))
-            r = oracle_connection.rman_cmd('crosscheck archivelog all; delete noprompt archivelog all;')
-            print(r)
+            try:
+                r = oracle_connection.rman_cmd('crosscheck archivelog all; delete noprompt archivelog all;')
+                print(r)
+            except OracleLib.RMANError as e:
+                print(e.errorcode, e.errormessage)
+            except RuntimeError:
+                print('ERROR: Something went wrong, is {0} open?'.format(sid))
 
     def _get_oraclelib_params(self, host_name):
         ipaddress = self.oracle_servers[host_name]['ipaddress']
@@ -256,7 +265,7 @@ class UpgradeController(object):
         curl_string = '{0} {1}'.format(curl_string, gpg_full_path)
         print('Command: {0}'.format(curl_string))
         out, err, rc = a.raw(curl_string)
-        print(rc)
+        print(err, rc)
         # If 404 error occurs
         if rc == 1:
             print('** ERROR: CURL could not find {0}. Skipping this host... **'.format(gpg_full_path))
@@ -268,7 +277,7 @@ class UpgradeController(object):
         uninstall_command = self.connectors['uninstall_commands'][platform]
         print('Command: {0}'.format(uninstall_command))
         out, err, rc = a.raw(uninstall_command)
-        print(rc)
+        print(err, rc)
 
         # Install latest connector
         print('Install connector ****')
@@ -277,7 +286,7 @@ class UpgradeController(object):
         install_command = install_command.replace('FILENAME', file_path)
         print('Command: {0}'.format(install_command))
         out, err, rc = a.raw(install_command)
-        print(rc)
+        print(err, rc)
 
         print('Cat /act/etc/key.txt ****')
         out, err, rc = a.raw('cat /act/etc/key.txt')

@@ -16,6 +16,7 @@ class YamlLoader(object):
         self.appliances = yaml.load(open(appliances_file))
         self.test_plan = yaml.load(open(plan_yml))
         self.connectors = yaml.load(open(connectors_file))
+        self.executions = yml.load(open('executions.yml'))
 
 
 class ScriptExecutor(object):
@@ -40,6 +41,62 @@ class ScriptExecutor(object):
         print(r[1])
         for line in r[0]:
             print(line.strip('\n'))
+
+
+class ExecutionPlanner(object):
+    """ Create aliases file and aliases.sh from executions file """
+    def __init__(self):
+        ymls = YamlLoader()
+        self.oracle_servers = ymls.oracle_servers
+        self.appliances = ymls.appliances
+        self.test_plan = ymls.test_plan
+        self.connectors = ymls.connectors
+
+    def create_aliases(self, filename='aliases'):
+        lines, names = self._create_aliases()
+        with open(filename, 'w') as f:
+            for line in lines:
+                f.write(line + '\n')
+        with open('{0}.sh'.format(filename), 'w') as f:
+            for name in names:
+                execution_string = 'nohup python rbc.py {0} &'.format(name)
+                f.write(execution_string + '\n')
+
+    def _create_alias(self, host, database, appliance, variables='', test='suites/ora2/logsmart_mounts1.robot'):
+        appliance_py = self.appliances[appliance]['inventory_file']
+        db_py = ''
+        for db_dict in self.oracle_servers[host]['databases']:
+            if database in db_dict.keys():
+                db_py = db_dict[database]['inventory_file']
+        if not db_py:
+            raise RuntimeError('Database name: {0} not found for host {1}'.format(database, host))
+
+        alias_name = '[{0}_{1}]'.format(host, database)
+        alias_string = 'inv/appliance/{0} inv/host/{1}:host1 inv/host/{1}:host2 {2} {3}'.format(appliance_py,
+                                                                                                db_py, variables, test)
+        return alias_name, alias_string
+
+    def _create_aliases(self, execution_name='default'):
+        alias_lines = []
+        alias_names = []
+        for host_name, config in self.test_plan.items():
+            # Ignore 'connectors' key in yml file
+            if host_name == 'connectors':
+                continue
+            # Create aliases for all databases
+            for db_dict in self.oracle_servers[host_name]['databases']:
+                host = host_name
+                database = db_dict.keys()[0]
+                appliance = config['appliance']
+                alias_definition, alias_string = self._create_alias(host, database, appliance)
+                alias_name = alias_definition.strip('[').strip(']')
+                alias_names.append(alias_name)
+                alias_lines.append(alias_definition)
+                alias_lines.append(alias_string)
+                alias_lines.append('')
+
+        return alias_lines, alias_names
+
 
 
 class CSVGenerator(object):

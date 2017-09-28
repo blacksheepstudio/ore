@@ -26,6 +26,7 @@ ndm4-vm:
 #
 ## AIX
 #
+
 bb6aix3:
   branch: trunk
   appliance: bopeep

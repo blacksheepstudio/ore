@@ -1,81 +1,102 @@
-suites:
-  osauth_mounts:
-    robot_file: suites/ora2/logsmart_mounts1.robot
-    variables:
-    host_needs:
-  dbauth_mounts:
-    robot_file: suites/ora2/logsmart_mounts1.robot
-    variables:
-  osauth_asasm_mounts:
-    robot_file: suites/ora2/logsmart_mounts1.robot
-    variables:
-    requirements:
-
-
-
-  dbauth_asasm_mounts: suites/ora2/logsmart_mounts1.robot
-  osauth_asfs_mounts: suites/ora2/logsmart_mounts1.robot
-  dbauth_asfs_mounts: suites/ora2/logsmart_mounts1.robot
-  osauth_nonlogsmart_mounts: suites/ora2/logsmart_mounts1.robot
-  dbauth_nonlogsmart_mounts: suites/ora2/logsmart_mounts1.robot
-
 # Each wave is a set of test executions using robot framwork
 
+# Given an execution name:
+# For each layer in the execution layers:
+#   Create 2 files:
+#     An 'aliases' file for RBC (named after execution)
+#       For each host/database in layer, create lines with alias name as <host>_<db>, with variables and suite from execution
+#     A script file, where:
+#       For each line in aliases file, create an execution command with nohup
+
 executions:
-  wave1:
-    label: first run
-      - nstlpar24:
-          database: ora111db
-      - atmlpar4:
-          database: atmlpar4fs
-      - atmlpar9:
-          database: ix11R2db
-      - bb6aix3:
-          database: bb12rcdb
-      - sun08-03:
-          database: sol12pdb
-      - sun08-01:
-          database: ora111db
-      - ore-rhel11g-1:
-          database: oriondb
-      - rh66orarac1:
-          database: ora111db
-      - ndm4-vm:
-          database: tengfs
-      - ore-oel72o12:
-          database: ramadb
-      - hpvm1:
-          database: hpracdb
-      - hpdbvm21:
-          database: hp121pdb
+  - mounts_default:
+      label: run mount suite with default options
+      layers:
+        - layer1
+        - layer2
+        - layer3
+      suite: suites/ora2/logsmart_mounts1.robot
+      variables:
 
-  wave2:
-    label: second run
-      - nstlpar24:
-          database: autodb
-      - atmlpar4:
-          database: atm4longname
-      - atmlpar9:
-          database: ax12cdb
-      - sun08-03:
-          database: sol11gdb
-      - sun08-01:
-          database: soldb
-      - rh66orarac1:
-          database: demondb
-      - ndm4-vm:
-          database: ort205db
-      - hpvm1:
-          database: orafsdb
-      - hpdbvm21:
-          database: hp11R2db
+  - mounts_dbauth:
+      layer: run mount suiet with db authentication
+      layers:
+        - layer1
+        - layer2
+        - layer3
+      suite: suites/ora2/logsmart_mounts1.robot
+      variables: authentication=db
 
-  wave3:
-    label: third run
-      - nstlpar24:
-          database: ora112fsdb
-      - sun08-01:
-          database: solfsdb
+  - mounts_nonlogsmart_osauth:
+      label: run mount suite with os auth, and non-logsmart policy
+      layers:
+        - layer1
+        - layer2
+        - layer3
+      suite: suites/ora2/logsmart_mounts1.robot
+      variables: logsmart=False
+
+  - mounts_nonlogsmart_dbauth:
+      label: run mount suite with db auth, and non-logsmart policy
+      layers:
+        - layer1
+        - layer2
+        - layer3
+      suite: suites/ora2/logsmart_mounts1.robot
+      variables: logsmart=False authentication=db
+
+layers:
+  layer1:
+    - nstlpar24:
+        database: ora111db
+    - atmlpar4:
+        database: atmlpar4fs
+    - atmlpar9:
+        database: ix11R2db
+    - bb6aix3:
+        database: bb12rcdb
+    - sun08-03:
+        database: sol12pdb
+    - sun08-01:
+        database: ora111db
+    - ore-rhel11g-1:
+        database: oriondb
+    - rh66orarac1:
+        database: ora111db
+    - ndm4-vm:
+        database: tengfs
+    - ore-oel72o12:
+        database: ramadb
+    - hpvm1:
+        database: hpracdb
+    - hpdbvm21:
+        database: hp121pdb
+
+  layer2:
+    - nstlpar24:
+        database: autodb
+    - atmlpar4:
+        database: atm4longname
+    - atmlpar9:
+        database: ax12cdb
+    - sun08-03:
+        database: sol11gdb
+    - sun08-01:
+        database: soldb
+    - rh66orarac1:
+        database: demondb
+    - ndm4-vm:
+        database: ort205db
+    - hpvm1:
+        database: orafsdb
+    - hpdbvm21:
+        database: hp11R2db
+
+  layer3:
+    - nstlpar24:
+        database: ora112fsdb
+    - sun08-01:
+        database: solfsdb
 
 
 #waves:

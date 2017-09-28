@@ -21,8 +21,15 @@ nstlpar24:
         inventory_file: "NSTLPAR24_ten205db1.py"
         oracle_sid: "ten205db1"
         oracle_home: "/ora10gr2home/db/OraHome_1"
-        version: "10.2"
+        version: "10.5"
         testlink_platform: "AIX 6.1 Oracle 10g RAC ASM"
+
+    - ora112fsdb:
+        inventory_file: "NSTLPAR24_ora112fsdb.py"
+        oracle_sid: "ora112fsdb"
+        oracle_home: "/database/11.2.0/product/dbhome_1"
+        version: "11.2"
+        testlink_platform: "AIX 6.1 Oracle 11g FS"
 
 bb6aix3:
   ipaddress: "172.16.199.53"
@@ -81,7 +88,6 @@ sun08-01:
         oracle_sid: "soldb1"
         oracle_home: "/oracle/product/11.2.0/dbhome_1"
         version: "11.2"
-        config: "asm"
         testlink_platform: "Solaris 11.3 Oracle 11g RAC ASM"
 
     - ora111db:
@@ -89,15 +95,13 @@ sun08-01:
         oracle_sid: "ora111db"
         oracle_home: "/oracle/product/11.1.0"
         version: "11.1"
-        config: "asm"
         testlink_platform: "Solaris 11.3 Oracle 11g RAC ASM"
 
     - tensoldb:
         inventory_file: "sun08-01-tensoldb.py"
         oracle_sid: "tensoldb1"
         oracle_home: "/oracle/product/10.2.0/db_1"
-        version: "10.2"
-        config: "asm"
+        version: "10.5"
         testlink_platform: "Solaris 11.3 Oracle 10g RAC ASM"
 
     - solfsdb:
@@ -105,7 +109,6 @@ sun08-01:
         oracle_sid: "solfsdb"
         oracle_home: "/oracle/product/11.2.0/dbhome_1"
         version: "11.2"
-        config: "filesystem"
         testlink_platform: "Solaris 11.3 Oracle 11g FS"
 
 sun08-03:
@@ -117,8 +120,14 @@ sun08-03:
         oracle_sid: "sol12pdb1"
         oracle_home: "/oracle/12.1.0/product/dbhome_1"
         version: "12.1"
-        config: "asm"
         testlink_platform: "Solaris 11.3 Oracle 12c RAC ASM"
+
+    - sol11gdb:
+        inventory_file: "sun08-03_sol11gdb.py"
+        oracle_sid: "sol11gdb1"
+        oracle_home: "/oracle/11.2.0/product/dbhome_1"
+        version: "11.2"
+        testlink_platform: "Solaris 11.3 Oracle 11g RAC ASM"
 
 # Linux
 rh66orarac1:
@@ -130,7 +139,6 @@ rh66orarac1:
         oracle_sid: "demondb1"
         oracle_home: "/database/oracle/app/oracle/product/11.2.0/dbhome_1"
         version: "11.2"
-        config: "asm"
         testlink_platform: "RH 6 Oracle 11g RAC ASM"
 
     - ora111db:
@@ -138,7 +146,6 @@ rh66orarac1:
         oracle_sid: "ora111db1"
         oracle_home: "/database/oracle/app/oracle/product/11.1.0/dbhome_1"
         version: "11.1"
-        config: "asm"
         testlink_platform: "RH 6 Oracle 11g RAC ASM"
 
 ndm4-vm:
@@ -149,16 +156,14 @@ ndm4-vm:
         inventory_file: "ndm4-vm-ort205db.py"
         oracle_sid: "ort205db1"
         oracle_home: "/u01/app/oracle/product/10.2.0/db_1"
-        version: "10.2"
-        config: "asm"
+        version: "10.5"
         testlink_platform: "RH 6 Oracle 10g RAC ASM"
 
     - tengfs:
         inventory_file: "ndm4-vm-tengfs.py"
         oracle_sid: "tengfs"
         oracle_home: "/u01/app/oracle/product/10.2.0/db_1"
-        version: "10.2"
-        config: "filesystem"
+        version: "10.5"
         testlink_platform: "RH 6 Oracle 10g RAC FS"
 
 ore-rhel11g-1:
@@ -170,7 +175,6 @@ ore-rhel11g-1:
         oracle_sid: "oriondb"
         oracle_home: "/u01/app/oracle/product/11.2.0.3/db_1"
         version: "11.2"
-        config: "filesystem"
         testlink_platform: "RH 6 Oracle 11g FS"
 
 ora12c1:
@@ -182,7 +186,6 @@ ora12c1:
         oracle_sid: "ora12hdb1"
         oracle_home: "/oracle/app/12.2.0/dbhome_1"
         version: "12.2"
-        config: "asm"
         testlink_platform: "RH 7 Oracle 12c RAC ASM"
 
 # HPUX
@@ -195,7 +198,6 @@ hpvm1:
         oracle_sid: "hpracdb1"
         oracle_home: "/orahome/app/11.2.0/product/dbhome_1"
         version: "11.2"
-        config: "asm"
         testlink_platform: "HPUX 11.31 Oracle 11g RAC ASM"
 
     - ora111db:
@@ -203,7 +205,6 @@ hpvm1:
         oracle_sid: "ora111db1"
         oracle_home: "/orahome/oracle/product/11.1.0"
         version: "11.1"
-        config: "asm"
         testlink_platform: "HPUX 11.31 Oracle 11g RAC ASM"
 
     - orafsdb:
@@ -211,7 +212,6 @@ hpvm1:
         oracle_sid: "orafsdb"
         oracle_home: "/orahome/app/11.2.0/product/dbhome_1"
         version: "11.2"
-        config: "filesystem"
         testlink_platform: "HPUX 11g FS"
     
     - ora10gdb:
@@ -219,7 +219,6 @@ hpvm1:
         oracle_sid: "ora10gdb1"
         oracle_home: "/orahome/app/11.2.0/product/dbhome_1"
         version: "10.2"
-        config: "asm"
         testlink_platform: "HPUX 10g RAC ASM"
 
 hpdbvm21:
@@ -231,7 +230,6 @@ hpdbvm21:
         oracle_sid: "hp121pdb1"
         oracle_home: "/oracle/12.1.0/product/dbhome_1"
         version: "12.1"
-        config: "asm"
         testlink_platform: "HPUX 12c RAC ASM"
 
     - hp11R2db:
@@ -239,5 +237,4 @@ hpdbvm21:
         oracle_sid: "hp11R2db1"
         oracle_home: "/oracle/11.2.0/product/dbhome_1"
         version: "11.2"
-        config: "asm"
         testlink_platform: "HPUX 11g RAC ASM"

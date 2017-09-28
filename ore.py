@@ -16,7 +16,7 @@ class YamlLoader(object):
         self.appliances = yaml.load(open(appliances_file))
         self.test_plan = yaml.load(open(plan_yml))
         self.connectors = yaml.load(open(connectors_file))
-        self.executions = yml.load(open('executions.yml'))
+        self.executions = yaml.load(open('executions.yml'))
 
 
 class ScriptExecutor(object):
@@ -51,18 +51,26 @@ class ExecutionPlanner(object):
         self.appliances = ymls.appliances
         self.test_plan = ymls.test_plan
         self.connectors = ymls.connectors
+        self.executions = ymls.executions
 
-    def create_aliases(self, filename='aliases'):
-        lines, names = self._create_aliases()
-        with open(filename, 'w') as f:
-            for line in lines:
+    def create_aliases(self):
+        final_lines = []
+	final_names = []
+        filename = 'aliases'
+	for execution_plan, data_dict in self.executions['executions'].items():
+	    for layer in data_dict['layers']:
+	        lines, names = self._create_aliases(execution_plan, layer=layer)
+                final_lines += lines
+	        final_names += names
+	with open(filename, 'w') as f:
+            for line in final_lines:
                 f.write(line + '\n')
         with open('{0}.sh'.format(filename), 'w') as f:
-            for name in names:
+            for name in final_names:
                 execution_string = 'nohup python rbc.py {0} &'.format(name)
                 f.write(execution_string + '\n')
 
-    def _create_alias(self, host, database, appliance, variables='', test='suites/ora2/logsmart_mounts1.robot'):
+    def _create_alias(self, host, database, appliance, variables='', test='suites/ora2/logsmart_mounts1.robot', layer='', execution=''):
         appliance_py = self.appliances[appliance]['inventory_file']
         db_py = ''
         for db_dict in self.oracle_servers[host]['databases']:
@@ -71,30 +79,29 @@ class ExecutionPlanner(object):
         if not db_py:
             raise RuntimeError('Database name: {0} not found for host {1}'.format(database, host))
 
-        alias_name = '[{0}_{1}]'.format(host, database)
-        alias_string = 'inv/appliance/{0} inv/host/{1}:host1 inv/host/{1}:host2 {2} {3}'.format(appliance_py,
-                                                                                                db_py, variables, test)
+        alias_name = '[{0}_{1}_{2}_{3}]'.format(host, database, execution, layer)
+        alias_string = 'inv/appliance/{0} inv/host/{1}:host1 inv/host/{1}:host2'.format(appliance_py, db_py)
+        if variables:
+            alias_string = alias_string + ' ' + variables
+        alias_string = alias_string + ' ' + test
         return alias_name, alias_string
 
-    def _create_aliases(self, execution_name='default'):
+    def _create_aliases(self, execution_name, layer):
         alias_lines = []
         alias_names = []
-        for host_name, config in self.test_plan.items():
-            # Ignore 'connectors' key in yml file
-            if host_name == 'connectors':
-                continue
-            # Create aliases for all databases
-            for db_dict in self.oracle_servers[host_name]['databases']:
-                host = host_name
-                database = db_dict.keys()[0]
-                appliance = config['appliance']
-                alias_definition, alias_string = self._create_alias(host, database, appliance)
-                alias_name = alias_definition.strip('[').strip(']')
-                alias_names.append(alias_name)
-                alias_lines.append(alias_definition)
-                alias_lines.append(alias_string)
-                alias_lines.append('')
-
+        for hostname, hostname_dict in self.executions['layers'][layer].items():
+            host = hostname
+            database = hostname_dict['database']
+            appliance = self.test_plan[host]['appliance']
+            variables = self.executions['executions'][execution_name]['variables']
+            alias_definition, alias_string = self._create_alias(host, database, appliance, variables, layer=layer, execution=execution_name)
+            print(alias_definition)
+            print(alias_string)
+            alias_name = alias_definition.strip('[').strip(']')
+            alias_names.append(alias_name)
+            alias_lines.append(alias_definition)
+            alias_lines.append(alias_string)
+            alias_lines.append('')
         return alias_lines, alias_names
 
 
@@ -470,7 +477,7 @@ def print_help():
     print(' ore cleanupdiag <hostname>: cleans up trace, audit files')
     print(' ore cleanup<type> all: cleans up all hosts in databases.yml')
     print('RBC Helper commands:')
-    print(' ore aliases <filename>: create aliases file for use with rbc')
+    print(' ore aliases <execution_plan_name>: create aliases file for use with rbc')
     print('YAML info commands:')
     print(' ore testplan : prints the oracle test plan to the screen')
     print(' ore databases: prints all the hosts, databases, and their information')
@@ -524,11 +531,9 @@ if __name__ == '__main__':
                 else:
                     print('Unknown script name')
         elif arg.lower() in ['aliases']:
-            tp = TestPlanner()
-            if len(sys.argv) > 2:
-                tp.create_aliases(filename=sys.argv[2])
-            else:
-                tp.create_aliases()
+            tp = ExecutionPlanner()
+     	    tp.create_aliases()       
+     
         elif arg.lower() in ['mkcsv']:
             if len(sys.argv) > 2:
                 filename = sys.argv[2]

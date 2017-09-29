@@ -468,7 +468,7 @@ class HostConnection(object):
 # CLI
 
 def print_help():
-    """ Display online list of CLI options """
+    """ Display on-screen list of CLI options """
     print('')
     print('*** Oracle Regression Environment Manager ***')
     print('')

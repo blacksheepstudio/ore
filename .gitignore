@@ -1,4 +1,6 @@
 *.pyc
+.idea/*
+.idea
 .idea/vcs.xml
 .idea/workspace.xml
 aliases

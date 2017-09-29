@@ -5,27 +5,22 @@ import atexit
 import logging
 import sys
 import pprint
-import OracleLib
+from lib import OracleLib
 import csv
 
 
 class YamlLoader(object):
-    def __init__(self, hosts_file='databases.yml', appliances_file='appliances.yml', plan_yml='plan.yml',
-                 connectors_file='connectors.yml'):
-        self.oracle_servers = yaml.load(open(hosts_file))
-        self.appliances = yaml.load(open(appliances_file))
-        self.test_plan = yaml.load(open(plan_yml))
-        self.connectors = yaml.load(open(connectors_file))
-        self.executions = yaml.load(open('executions.yml'))
-
-
-class ScriptExecutor(object):
     def __init__(self):
-        ymls = YamlLoader()
-        self.oracle_servers = ymls.oracle_servers
-        self.appliances = ymls.appliances
-        self.test_plan = ymls.test_plan
-        self.connectors = ymls.connectors
+        self.oracle_servers = yaml.load(open('yaml/databases.yml'))
+        self.appliances = yaml.load(open('yaml/appliances.yml'))
+        self.test_plan = yaml.load(open('yaml/plan.yml'))
+        self.connectors = yaml.load(open('yaml/connectors.yml'))
+        self.executions = yaml.load(open('yaml/executions.yml'))
+
+
+class ScriptExecutor(YamlLoader):
+    def __init__(self):
+        super(ScriptExecutor, self).__init__()
 
     def execute_permissions_check(self, host_name):
         ipaddress = self.oracle_servers[host_name]['ipaddress']
@@ -43,15 +38,10 @@ class ScriptExecutor(object):
             print(line.strip('\n'))
 
 
-class ExecutionPlanner(object):
+class ExecutionPlanner(YamlLoader):
     """ Create aliases file and aliases.sh from executions file """
     def __init__(self):
-        ymls = YamlLoader()
-        self.oracle_servers = ymls.oracle_servers
-        self.appliances = ymls.appliances
-        self.test_plan = ymls.test_plan
-        self.connectors = ymls.connectors
-        self.executions = ymls.executions
+        super(ExecutionPlanner, self).__init__()
 
     def create_aliases(self):
         final_lines = []
@@ -105,18 +95,12 @@ class ExecutionPlanner(object):
         return alias_lines, alias_names
 
 
-
-class CSVGenerator(object):
+class CSVGenerator(YamlLoader):
     """
     Generates a CSV of the current test plan
     """
     def __init__(self, plan='plan.yml'):
-        self.plan = plan
-        ymls = YamlLoader()
-        self.oracle_servers = ymls.oracle_servers
-        self.appliances = ymls.appliances
-        self.test_plan = ymls.test_plan
-        self.connectors = ymls.connectors
+        super(CSVGenerator, self).__init__()
 
     def create_csv(self, filename='plan.csv'):
         column_labels = ['platform', 'testlink_platform', 'oracle_version', 'oracle_sid', 'host_name', 'ipaddress',
@@ -145,13 +129,9 @@ class CSVGenerator(object):
                 wr.writerow(row)
 
 
-class OracleCleaner(object):
+class OracleCleaner(YamlLoader):
     def __init__(self):
-        ymls = YamlLoader()
-        self.oracle_servers = ymls.oracle_servers
-        self.appliances = ymls.appliances
-        self.test_plan = ymls.test_plan
-        self.connectors = ymls.connectors
+        super(OracleCleaner, self).__init__()
 
     def cleanup_diag(self, host_name, test=True):
         ipaddress, password, homes, sids = self._get_oraclelib_params(host_name)
@@ -202,16 +182,12 @@ class OracleCleaner(object):
         return ipaddress, password, homes, sids
 
 
-class TestPlanner(object):
+class TestPlanner(YamlLoader):
     """
     Class used for generating rbc alias files from yml data
     """
     def __init__(self):
-        ymls = YamlLoader()
-        self.oracle_servers = ymls.oracle_servers
-        self.appliances = ymls.appliances
-        self.test_plan = ymls.test_plan
-        self.connectors = ymls.connectors
+        super(TestPlanner, self).__init__()
 
     def create_aliases(self, filename='aliases'):
         lines, names = self._create_aliases()
@@ -258,14 +234,9 @@ class TestPlanner(object):
         return alias_lines, alias_names
 
 
-class UpgradeController(object):
+class UpgradeController(YamlLoader):
     def __init__(self):
-        # Load ymls database
-        ymls = YamlLoader()
-        self.oracle_servers = ymls.oracle_servers
-        self.appliances = ymls.appliances
-        self.test_plan = ymls.test_plan
-        self.connectors = ymls.connectors
+        super(UpgradeController, self).__init__()
 
     def print_host_info(self, host_name):
         connector, platform, databases = self.get_host_info(host_name)

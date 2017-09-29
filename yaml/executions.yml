@@ -164,3 +164,16 @@ executions:
     suite: suites/ora2/logsmart_mounts1.robot
     variables: logsmart=False authentication=db
 
+  mounts_default_filesystems:
+    label: run mount suite against only filesystem databases
+    layers:
+      - layerfs
+    suite: suites/ora2/logsmart_mounts1.robot
+    variables:
+
+  mounts_dbauth_filesystems:
+    label: run mount suite against only filesystems with dbauth
+    layers:
+      - layerfs
+    suite: suites/ora2/logsmart_mounts1.robot
+    variables: authentication=db

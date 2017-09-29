@@ -22,57 +22,64 @@ This is done by editing four yamls: appliances.yml, databases.yml, plan.yml, exe
     Make sure your rbc_settings.py variables are all set correctly.
     
 **Step 3)** 
-        Edit appliances.yml with entries for each appliance, e.g:
-        ```
-        orasky1:
-        inventory_file: "orasky1.py"
-        appliance_type: "sky"
-        ipaddress: "172.27.20.201"
-        ```
+Edit appliances.yml with entries for each appliance, e.g:
+
+``
+orasky1:
+inventory_file: "orasky1.py"
+appliance_type: "sky"
+ipaddress: "172.27.20.201"
+``
+
 **Step 4)**
-    Edit databases.yml and add in your hosts/databases, e.g:
-        ```
-        atmlpar4:
-            ipaddress: "172.27.36.20"
-            platform: "AIX"
-            databases:
-            - atm4longname:
-                inventory_file: "atmlpar4-atm4longname.py"
-                oracle_sid: "atm4longname"
-                oracle_home: "/u01/ordb/oracle/product/11.2.0"
-                version: "11.2"
-                testlink_platform: "AIX 6.1 Oracle 11g RAC ASM"
-            - atmlpar4fs:
-                inventory_file: "atmlpar4-atmlpar4fs.py"
-                oracle_sid: "atmlpar4fs"
-                oracle_home: "/u01/ordb/oracle/product/11.2.0"
-                version: "11.2"
-                testlink_platform: "AIX 6.1 Oracle 11g FS"
-        ```
+
+Edit databases.yml and add in your hosts/databases, e.g:
+
+``
+atmlpar4:
+    ipaddress: "172.27.36.20"
+    platform: "AIX"
+    databases:
+    - atm4longname:
+        inventory_file: "atmlpar4-atm4longname.py"
+        oracle_sid: "atm4longname"
+        oracle_home: "/u01/ordb/oracle/product/11.2.0"
+        version: "11.2"
+        testlink_platform: "AIX 6.1 Oracle 11g RAC ASM"
+    - atmlpar4fs:
+        inventory_file: "atmlpar4-atmlpar4fs.py"
+        oracle_sid: "atmlpar4fs"
+        oracle_home: "/u01/ordb/oracle/product/11.2.0"
+        version: "11.2"
+        testlink_platform: "AIX 6.1 Oracle 11g FS"
+``
+
 **Step 5)**
     Edit plan.yml and create your appliance/connector version matrix:
     
 First you must create aliases for connector versions by listing exact directory on Garfield:
-    ```
-    connectors:
-        trunk: "https://garfield.build.actifio.com/files/builds/cdsky/trunk/8.0.0/8.0.0.1458/"
-        sp713: "https://garfield.build.actifio.com/files/builds/cdsky/sp-7.1.3/7.1.3/7.1.3.273/"
-        sp715: "https://garfield.build.actifio.com/files/builds/cdsky/sp-7.1.5/7.1.5/7.1.5.406/" 
-    ```
+
+``
+connectors:
+    trunk: "https://garfield.build.actifio.com/files/builds/cdsky/trunk/8.0.0/8.0.0.1458/"
+    sp713: "https://garfield.build.actifio.com/files/builds/cdsky/sp-7.1.3/7.1.3/7.1.3.273/"
+    sp715: "https://garfield.build.actifio.com/files/builds/cdsky/sp-7.1.5/7.1.5/7.1.5.406/" 
+``
 
 Then you must create appliance/host/version relationships:
-    ```
-    # Host name
-    ore-rhel11g-1:
-        # Branch alias
-        branch: trunk
-        # Appliance name
-        appliance: orasky3
-    ndm4-vm:
-        branch: trunk
-        appliance: orasky3
-    # Add more
-    ```
+
+``
+# Host name
+ore-rhel11g-1:
+    # Branch alias
+    branch: trunk
+    # Appliance name
+    appliance: orasky3
+ndm4-vm:
+    branch: trunk
+    appliance: orasky3
+# Add more
+``
 
 **Step 6)**
 
@@ -86,50 +93,53 @@ Finally you must edit the executions.yml, this is the most important part:
     
 First let's create a set of layers.
 A Layer is any number of hosts/databases that can run in parallel, without disrupting each other:
-    ```
-    layers:
-      layer1:
-        nstlpar24:
-          database: ora111db
-        atmlpar4:
-          database: atmlpar4fs
-        atmlpar9:
-          database: ix11R2db
-      layer2:
-        nstlpar24:
-          database: nextdb
-        atmlpar4:
-          database: anotherdb
-        atmlpar9:
-          database: yetanother
-      layer3:
-        # etc ...
-    ```
+
+``
+layers:
+  layer1:
+    nstlpar24:
+      database: ora111db
+    atmlpar4:
+      database: atmlpar4fs
+    atmlpar9:
+      database: ix11R2db
+  layer2:
+    nstlpar24:
+      database: nextdb
+    atmlpar4:
+      database: anotherdb
+    atmlpar9:
+      database: yetanother
+  layer3:
+    # etc ...
+``
   
 Once you have created your layers, (In the following example we have created 3 layers),
 You must create execution profiles:
 Here is an example of the Execution Profile tab:
-    ```
-    executions:
-        # This profile will run a standard suite, with no params, on three layers
-        mounts_default:
-            label: run mount suite with default options
-            layers:
-              - layer1
-              - layer2
-              - layer3
-            suite: suites/ora2/logsmart_mounts1.robot
-            variables:
-        # This profile will run the same set of layers, but with db authentication
-        mounts_dbauth:
-            label: run mount suite with db authentication
-            layers:
-              - layer1
-              - layer2
-              - layer3
-            suite: suites/ora2/logsmart_mounts1.robot
-            variables: authentication=db
-    ```
+
+``
+executions:
+    # This profile will run a standard suite, with no params, on three layers
+    mounts_default:
+        label: run mount suite with default options
+        layers:
+          - layer1
+          - layer2
+          - layer3
+        suite: suites/ora2/logsmart_mounts1.robot
+        variables:
+    # This profile will run the same set of layers, but with db authentication
+    mounts_dbauth:
+        label: run mount suite with db authentication
+        layers:
+          - layer1
+          - layer2
+          - layer3
+        suite: suites/ora2/logsmart_mounts1.robot
+        variables: authentication=db
+``
+
 **Step 7)**
 
 Generate your aliases file, and execute tests:
@@ -137,6 +147,7 @@ Generate your aliases file, and execute tests:
 > python ore.py aliases
 
 > cat aliases.sh
+
 ``
 nohup python rbc.py hpvm1_hpracdb_mounts_nonlogsmart_osauth_layer1 &
 nohup python rbc.py atmlpar9_ix11R2db_mounts_nonlogsmart_osauth_layer1 &

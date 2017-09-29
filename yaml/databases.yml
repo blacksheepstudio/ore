@@ -189,14 +189,14 @@ ora12c1:
   platform: "Linux"
   databases:
     ora12xdb:
-      inventory_file: "ora12c1_ora12xdb1.py"
+      inventory_file: "ora12c1_ora12xdb.py"
       oracle_sid: "ora12xdb1"
       oracle_home: "/oracle/app/12.2.0/dbhome_1"
       version: "12.2"
       testlink_platform: "RH 7 Oracle 12c RAC ASM"
 
     dg112gdb:
-      inventory_file: "ora12c1_dg112gdb1.py"
+      inventory_file: "ora12c1_dg112gdb.py"
       oracle_sid: "dg112gdb1"
       oracle_home: "/oracle/app/11.2.0/dbhome_1"
       version: "11.2"

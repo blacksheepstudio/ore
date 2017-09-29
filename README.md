@@ -162,8 +162,8 @@ You are now running robot tests.
 
 You must wait for layer1 to complete, before you can copy and paste all the executions of layer2.
 
-
-**After Notes**
+--------------
+**Test Notes**
 
 While tests are running, their output will be sent to ./logs/<alias_name>.txt
 
@@ -175,7 +175,7 @@ Once a test has completed it will go to ./logs/<today's date>/<alias_name>.txt|h
 If you have created all the configuration files correctly, with no errors,
 you should now be able to do a lot of things with ore.
 
-*Generate a CSV of the testplan
+*Generate a CSV of the testplan:*
 > python ore.py mkcsv
 
 *Check databases running / connector versions on all hosts:*

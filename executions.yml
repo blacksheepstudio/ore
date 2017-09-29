@@ -19,7 +19,7 @@ executions:
     variables:
 
   mounts_dbauth:
-    label: run mount suiet with db authentication
+    label: run mount suite with db authentication
     layers:
       - layer1
       - layer2

@@ -55,20 +55,20 @@ class ExecutionPlanner(object):
 
     def create_aliases(self):
         final_lines = []
-	final_names = []
+        final_names = []
         filename = 'aliases'
-	for execution_plan, data_dict in self.executions['executions'].items():
-	    for layer in data_dict['layers']:
-	        lines, names = self._create_aliases(execution_plan, layer=layer)
+        for execution_plan, data_dict in self.executions['executions'].items():
+            for layer in data_dict['layers']:
+                lines, names = self._create_aliases(execution_plan, layer=layer)
                 final_lines += lines
-	        final_names += names
-	with open(filename, 'w') as f:
-            for line in final_lines:
-                f.write(line + '\n')
-        with open('{0}.sh'.format(filename), 'w') as f:
-            for name in final_names:
-                execution_string = 'nohup python rbc.py {0} &'.format(name)
-                f.write(execution_string + '\n')
+                final_names += names
+            with open(filename, 'w') as f:
+                for line in final_lines:
+                    f.write(line + '\n')
+            with open('{0}.sh'.format(filename), 'w') as f:
+                for name in final_names:
+                    execution_string = 'nohup python rbc.py {0} &'.format(name)
+                    f.write(execution_string + '\n')
 
     def _create_alias(self, host, database, appliance, variables='', test='suites/ora2/logsmart_mounts1.robot', layer='', execution=''):
         appliance_py = self.appliances[appliance]['inventory_file']
@@ -464,21 +464,24 @@ class HostConnection(object):
 def print_help():
     print('')
     print('*** Oracle Regression Environment Manager ***')
-    print('TestPlan commands:')
+    print('[TestPlan commands]')
     print(' ore mkcsv: create blank testplan csv file')
-    print('Upgrade commands:')
+    print(' ore aliases: create rbc aliases file from executions.yml')
+    print('')
+    print('[Host connector upgrade commands]')
     print(' ore upgradehosts: upgrade host connectors according to testplan')
     print(' ore upgradehost <hostname> <branch>: upgrade a single host')
-    print('Info commands:')
-    print(' ore lshost <hostname>: print host information')
-    print(' ore lshosts <hostname>: print all host information')
-    print('Cleanup commands:')
+    print('')
+    print('[Host info commands]')
+    print(' ore lshost <hostname>: gather host information from given host')
+    print(' ore lshosts <hostname>: gather host information from all hosts')
+    print('')
+    print('[Host cleanup commands]')
     print(' ore cleanuplogs <hostname>: cleans up archivelogs')
     print(' ore cleanupdiag <hostname>: cleans up trace, audit files')
     print(' ore cleanup<type> all: cleans up all hosts in databases.yml')
-    print('RBC Helper commands:')
-    print(' ore aliases <execution_plan_name>: create aliases file for use with rbc')
-    print('YAML info commands:')
+    print('')
+    print('[YAML info commands]')
     print(' ore testplan : prints the oracle test plan to the screen')
     print(' ore databases: prints all the hosts, databases, and their information')
     print(' ore appliances: prints all the appliances, and their information')
@@ -486,12 +489,15 @@ def print_help():
 
 if __name__ == '__main__':
     oc = OracleCleaner()
-
     if len(sys.argv) > 1:
         arg = sys.argv[1]
+
+        # Upgrade all host connectors according to plan.yml
         if arg.lower() in ['upgradehosts']:
             uc = UpgradeController()
             uc.upgrade_connectors()
+
+        # Cleanup archivelogs on given host(s)
         elif arg.lower() in ['cleanuplogs', 'rmlogs']:
             if sys.argv[2] in ['all', '-a', '-A', 'a', 'A']:
                 hosts = [host for host in oc.test_plan.keys() if host != 'connectors']
@@ -503,6 +509,8 @@ if __name__ == '__main__':
                     oc.cleanup_archivelogs(sys.argv[2])
                 except KeyError:
                     print('Host not found!')
+
+        # Cleanup diag artifacts on given hosts(s)
         elif arg.lower() in ['cleanupdiag', 'cleandiag', 'rmdiag']:
             if sys.argv[2] in ['all', '-a', '-A', 'a', 'A']:
                 hosts = [host for host in oc.test_plan.keys() if host != 'connectors']
@@ -514,12 +522,16 @@ if __name__ == '__main__':
                     oc.cleanup_diag(sys.argv[2], test=False)
                 except KeyError:
                     print('Host not found!')
+
+        # Upgrade given connector on given host
         elif arg.lower() in ['upgradehost', 'upgrade']:
             if len(sys.argv) < 4:
                 print('Format: ore upgradehost <hostname> <branch>')
             else:
                 uc = UpgradeController()
                 uc.upgrade_connector(sys.argv[2], sys.argv[3])
+
+        # Execute custom script
         elif arg.lower() in ['execute', 'script']:
             if len(sys.argv) < 3:
                 print('Format: ore script <hostname> <script_name>')
@@ -530,10 +542,13 @@ if __name__ == '__main__':
                     se.execute_permissions_check(sys.argv[2])
                 else:
                     print('Unknown script name')
+
+        # Create aliases file using data from plan.yml and executions.yml
         elif arg.lower() in ['aliases']:
             tp = ExecutionPlanner()
-     	    tp.create_aliases()       
-     
+            tp.create_aliases()
+
+        # Create csv file outlining execution plan
         elif arg.lower() in ['mkcsv']:
             if len(sys.argv) > 2:
                 filename = sys.argv[2]
@@ -544,27 +559,41 @@ if __name__ == '__main__':
                 a.create_csv(filename)
             else:
                 print('Format should be: ore mkcsv <filename.csv>')
+
+        # Print testplan information
         elif arg.lower() in ['testplan', 'plan']:
             tp = TestPlanner()
             pprint.pprint(tp.test_plan)
+
+        # List appliances
         elif arg.lower() in ['appliances', 'appliance']:
             tp = TestPlanner()
             pprint.pprint(tp.appliances)
+
+        # List databases and information
         elif arg.lower() in ['databases', 'hosts', 'servers']:
             tp = TestPlanner()
             pprint.pprint(tp.oracle_servers)
+
+        # Gather facts from given host
         elif arg.lower() in ['hostinfo', 'lshost', 'ls']:
             if len(sys.argv) > 2:
                 uc = UpgradeController()
                 uc.print_host_info(sys.argv[2])
             else:
                 print('Specify hostname')
+
+        # Gather facts from all hosts in test plan
         elif arg.lower() in ['lshosts']:
             uc = UpgradeController()
             hosts = [host for host in oc.test_plan.keys() if host != 'connectors']
             for host in hosts:
                 print('**** {0}'.format(host))
-                uc.print_host_info(host)
+                try:
+                    uc.print_host_info(host)
+                except RuntimeError as e:
+                    print('Something went wrong, unable to connect?')
+                    print(e.message)
         else:
             print_help()
     else:

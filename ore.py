@@ -212,6 +212,12 @@ class OracleCleaner(YamlLoader):
         super(OracleCleaner, self).__init__()
 
     def cleanup_diag(self, host_name, test=True):
+        """ This command will query the background_dump_dest in the database then, as Oracle user will
+        issue rm -rf commands on the data within the trace and audit folders.
+
+        WARNING: This has the potential to go horribly wrong, I have put some safety measures in place,
+        but there is no guarantee that something horrible will not happen """
+
         ipaddress, password, homes, sids = self._get_oraclelib_params(host_name)
 
         for i, sid in enumerate(sids):
@@ -459,18 +465,13 @@ class HostConnection(object):
         self.client = None
 
 
-# UNIT TESTS
-# # Unit test for TestPlanner
-# a = TestPlanner()
-# a.create_aliases()
-#
-# # Unit test for HostUpgrader
-# a = UpgradeController()
-# a.upgrade_connectors()
+# CLI
 
 def print_help():
+    """ Display online list of CLI options """
     print('')
     print('*** Oracle Regression Environment Manager ***')
+    print('')
     print('[TestPlan commands]')
     print(' ore mkcsv: create blank testplan csv file')
     print(' ore mkinv: create RobotFramework inventory for hosts')
@@ -494,6 +495,7 @@ def print_help():
     print(' ore databases: prints all the hosts, databases, and their information')
     print(' ore appliances: prints all the appliances, and their information')
     print('')
+
 
 if __name__ == '__main__':
     oc = OracleCleaner()

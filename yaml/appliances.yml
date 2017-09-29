@@ -1,3 +1,7 @@
+# Add your appliances here
+# Make sure that your appliances have root password set to 'actifio2'
+# Make sure your appliance REST API username/password is 'admin'/'password'
+
 orasky1:
   inventory_file: "orasky1.py"
   appliance_type: "sky"

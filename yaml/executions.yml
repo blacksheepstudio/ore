@@ -1,49 +1,11 @@
-# Each wave is a set of test executions using robot framwork
+# **Terms**
+#    - Layers:
+#        A layer is a set of tests that will all run IN PARALLEL
+#    - Execution Profile:
+#        Combining a set of Layers, a robot suite, and any number of parameters for test run.
 
-# Given an execution name:
-# For each layer in the execution layers:
-#   Create 2 files:
-#     An 'aliases' file for RBC (named after execution)
-#       For each host/database in layer, create lines with alias name as <host>_<db>, with variables and suite from execution
-#     A script file, where:
-#       For each line in aliases file, create an execution command with nohup
-
-executions:
-  mounts_default:
-    label: run mount suite with default options
-    layers:
-      - layer1
-      - layer2
-      - layer3
-    suite: suites/ora2/logsmart_mounts1.robot
-    variables:
-
-  mounts_dbauth:
-    label: run mount suite with db authentication
-    layers:
-      - layer1
-      - layer2
-      - layer3
-    suite: suites/ora2/logsmart_mounts1.robot
-    variables: authentication=db
-
-  mounts_nonlogsmart_osauth:
-    label: run mount suite with os auth, and non-logsmart policy
-    layers:
-      - layer1
-      - layer2
-      - layer3
-    suite: suites/ora2/logsmart_mounts1.robot
-    variables: logsmart=False
-
-  mounts_nonlogsmart_dbauth:
-    label: run mount suite with db auth, and non-logsmart policy
-    layers:
-      - layer1
-      - layer2
-      - layer3
-    suite: suites/ora2/logsmart_mounts1.robot
-    variables: logsmart=False authentication=db
+# First let's create a set of layers.
+# A Layer is any number of hosts/databases that can run in parallel, without disrupting each other:
 
 layers:
   layer1:
@@ -159,53 +121,46 @@ layers:
     hpdbvm21:
       database: hp121pdb
 
-  # None
-  # layer12cr2:
 
+# You must create execution profiles, which can contain any number of layers.
+# Label them for easier management.
+# Choose the robot framework suite that is run against each database in each layer.
+# Choose any number of variables to add at execution time of the robot suite.
 
+executions:
+  mounts_default:
+    label: run mount suite with default options
+    layers:
+      - layer1
+      - layer2
+      - layer3
+    suite: suites/ora2/logsmart_mounts1.robot
+    variables:
 
+  mounts_dbauth:
+    label: run mount suite with db authentication
+    layers:
+      - layer1
+      - layer2
+      - layer3
+    suite: suites/ora2/logsmart_mounts1.robot
+    variables: authentication=db
 
+  mounts_nonlogsmart_osauth:
+    label: run mount suite with os auth, and non-logsmart policy
+    layers:
+      - layer1
+      - layer2
+      - layer3
+    suite: suites/ora2/logsmart_mounts1.robot
+    variables: logsmart=False
 
+  mounts_nonlogsmart_dbauth:
+    label: run mount suite with db auth, and non-logsmart policy
+    layers:
+      - layer1
+      - layer2
+      - layer3
+    suite: suites/ora2/logsmart_mounts1.robot
+    variables: logsmart=False authentication=db
 
-
-
-#waves:
-#  wave1a:
-#    label: 11gr1 osauth
-#    executions:
-#      - nstlpar24:
-#          database: ora111db
-#          suite: osauth_asfs_mounts
-#      - sun08-01:
-#          database: ora111db
-#          suite: osauth_mounts
-#      - rh66orarac1:
-#          database: ora111db
-#          suite: osauth_asfs_mounts
-#      - hpvm1:
-#          database: ora111db
-#          suite: osauth_mounts
-#
-#  wave1b:
-#    label: 10g and 12c
-#    executions:
-#      - ndm4-vm:
-#          database: ort205db
-#          suite: osauth_mounts
-#      -
-#
-#  wave2a:
-#    label: 11gr1 dbauth
-#    executions:
-#      - nstlpar24:
-#          database: ora111db
-#          suite: dbauth_mounts
-#      - sun08-01:
-#          database: ora111db
-#          suite: dbauth_asfs_mounts
-#      - rh66orarac1:
-#          database: ora111db
-#          suite: dbauth_mounts
-#      - hpvm1:
-#          database: ora111db
-#          suite: dbauth_asfs_mounts

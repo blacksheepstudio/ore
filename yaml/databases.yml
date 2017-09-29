@@ -1,3 +1,9 @@
+# In this file you must create a datapoint for every single host/database
+# combination in your environment.
+# Every host must have an ipaddress, platform, and a set of databases.
+# Each database must have a name, an inventory_file, an oracle_sid, and oracle_home,
+# a version, and a testlink_platform.
+
 # AIX
 nstlpar24:
   ipaddress: "172.27.8.90"

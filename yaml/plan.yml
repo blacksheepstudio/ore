@@ -1,9 +1,15 @@
-# Connector paths
+# 1)
+# In this file you must define the paths to the connectors.
+# Go to garfield to and copy the directory of the build you're looking for.
+# You can create as many connector aliases as you want.
 
 connectors:
   trunk: "https://garfield.build.actifio.com/files/builds/cdsky/trunk/8.0.0/8.0.0.1458/"
   sp713: "https://garfield.build.actifio.com/files/builds/cdsky/sp-7.1.3/7.1.3/7.1.3.273/"
   sp715: "https://garfield.build.actifio.com/files/builds/cdsky/sp-7.1.5/7.1.5/7.1.5.406/"
+
+# 2)
+# Also you must define which hosts, go to which sky, and what version they will use.
 
 #Linux
 

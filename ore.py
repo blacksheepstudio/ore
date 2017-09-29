@@ -27,11 +27,11 @@ class ScriptExecutor(YamlLoader):
         connection = HostConnection(ipaddress)
 
         print('** Sending scripts to {0}'.format(host_name))
-        r = connection.scp_script('host_scripts/chkperms.sh')
-        r = connection.scp_script('host_scripts/chkperms.txt')
+        connection.scp_script('host_scripts/chkperms.sh')
+        connection.scp_script('host_scripts/chkperms.txt')
 
         print('** Executing: /tmp/chkperms.sh')
-        r = connection.raw('chmod 777 /tmp/chkperms.sh; chmod 777 /tmp/chkperms.txt')
+        connection.raw('chmod 777 /tmp/chkperms.sh; chmod 777 /tmp/chkperms.txt')
         r = connection.raw('cd /tmp; ./chkperms.sh')
         print(r[1])
         for line in r[0]:
@@ -43,7 +43,16 @@ class HostInventoryCreator(YamlLoader):
     def __init__(self):
         super(HostInventoryCreator, self).__init__()
 
-    def create_appliance_inventory_file(self, hostname):
+    def create_all_inventory(self):
+        for hostname, host_dict in self.oracle_servers.items():
+            for dbname, db_dict in host_dict['databases'].items():
+                self._create_inventory_file(hostname, dbname)
+        print('All host inventory files have been created in ./inv/host')
+        for hostname, app_dict in self.appliances.items():
+            self._create_appliance_inventory_file(hostname)
+        print('All appliance inventory files have been created in ./inv/appliance')
+
+    def _create_appliance_inventory_file(self, hostname):
         """ Creates appliance inventory file """
 
         appliance = self.appliances[hostname]
@@ -79,7 +88,7 @@ class HostInventoryCreator(YamlLoader):
                 f.write(line + '\n')
         print('Created appliance inventory: inv/appliance/{0}'.format(filename))
 
-    def create_inventory_file(self, hostname, database):
+    def _create_inventory_file(self, hostname, database):
         """
         Creates an inventory file given a hostname and database
         :param hostname: hostname in databases.yml
@@ -145,15 +154,6 @@ class HostInventoryCreator(YamlLoader):
             for line in lines:
                 f.write(line + '\n')
         print('Created inv/host{0}'.format(filename))
-
-    def create_all_inventory(self):
-        for hostname, host_dict in self.oracle_servers.items():
-            for dbname, db_dict in host_dict['databases'].items():
-                self.create_inventory_file(hostname, dbname)
-        print('All host inventory files have been created in ./inv/host')
-        for hostname, app_dict in self.appliances.items():
-            self.create_appliance_inventory_file(hostname)
-        print('All appliance inventory files have been created in ./inv/appliance')
 
 
 class ExecutionPlanner(YamlLoader):
@@ -599,7 +599,7 @@ if __name__ == '__main__':
         elif arg.lower() in ['mkinv']:
             if len(sys.argv) > 3:
                 ic = HostInventoryCreator()
-                ic.create_inventory_file(sys.argv[2], sys.argv[3])
+                ic._create_inventory_file(sys.argv[2], sys.argv[3])
             else:
                 if len(sys.argv) > 2:
                     if sys.argv[2] in ['all', '-a', 'ALL']:

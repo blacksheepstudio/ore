@@ -1,0 +1,50 @@
+AIX Oracle 10gr2 RAC ASM
+AIX Oracle 10gr2 FS
+AIX Oracle 11gr1 RAC ASM
+AIX Oracle 11gr1 FS
+AIX Oracle 11gr2 RAC ASM
+AIX Oracle 11gr2 FS
+AIX Oracle 12cr1 RAC ASM
+AIX Oracle 12cr1 FS
+AIX Oracle 12cr2 RAC ASM
+AIX Oracle 12cr2 FS
+Solaris Oracle 10gr2 RAC ASM
+Solaris Oracle 10gr2 FS
+Solaris Oracle 11gr1 RAC ASM
+Solaris Oracle 11gr1 FS
+Solaris Oracle 11gr2 RAC ASM
+Solaris Oracle 11gr2 FS
+Solaris Oracle 12cr1 RAC ASM
+Solaris Oracle 12cr1 FS
+Solaris Oracle 12cr2 RAC ASM
+Solaris Oracle 12cr2 FS
+HPUX Oracle 10gr2 RAC ASM
+HPUX Oracle 10gr2 FS
+HPUX Oracle 11gr1 RAC ASM
+HPUX Oracle 11gr1 FS
+HPUX Oracle 11gr2 RAC ASM
+HPUX Oracle 11gr2 FS
+HPUX Oracle 12cr1 RAC ASM
+HPUX Oracle 12cr1 FS
+HPUX Oracle 12cr2 RAC ASM
+HPUX Oracle 12cr2 FS
+Linux Oracle 10gr2 RAC ASM
+Linux Oracle 10gr2 FS
+Linux Oracle 11gr1 RAC ASM
+Linux Oracle 11gr1 FS
+Linux Oracle 11gr2 RAC ASM
+Linux Oracle 11gr2 FS
+Linux Oracle 12cr1 RAC ASM
+Linux Oracle 12cr1 FS
+Linux Oracle 12cr2 RAC ASM
+Linux Oracle 12cr2 FS
+Windows Oracle 10gr2 RAC ASM
+Windows Oracle 10gr2 FS
+Windows Oracle 11gr1 RAC ASM
+Windows Oracle 11gr1 FS
+Windows Oracle 11gr2 RAC ASM
+Windows Oracle 11gr2 FS
+Windows Oracle 12cr1 RAC ASM
+Windows Oracle 12cr1 FS
+Windows Oracle 12cr2 RAC ASM
+Windows Oracle 12cr2 FS

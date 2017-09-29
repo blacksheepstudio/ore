@@ -38,6 +38,85 @@ class ScriptExecutor(YamlLoader):
             print(line.strip('\n'))
 
 
+class HostInventoryCreator(YamlLoader):
+    """ Create Oracle RobotFrameWork inventory files on the fly """
+    def __init__(self):
+        super(HostInventoryCreator, self).__init__()
+
+    def create_inventory_file(self, hostname, database):
+        """
+        Creates an inventory file given a hostname and database
+        :param hostname: hostname in databases.yml
+        :param database: database name in databases.yml
+        :return:
+        """
+        # Gather facts for inventory file data from yamls
+        dict_kvs = []
+        dict_kvs.append("'name': '{}'".format(hostname))
+        ip = self.oracle_servers[hostname]['ipaddress']
+        dict_kvs.append("'ip': '{}'".format(ip))
+        dict_kvs.append("'ssh_user': 'root'")
+        dict_kvs.append("'ssh_pass': '12!pass345'")
+        dict_kvs.append("'ssh_private_key_file': ''")
+        dict_kvs.append("'app': '{0}'".format(database))
+        dict_kvs.append("'app_type': 'Oracle'")
+        dict_kvs.append("'apps': ['/', '{0}']".format(database))
+        dict_kvs.append("'app_list': ['/', '{0}']".format(database))
+        dict_kvs.append("'app_exclude': ['/']")
+
+        platform = self.oracle_servers[hostname]['databases'][database]['testlink_platform']
+        if 'asm' in platform.lower():
+            dict_kvs.append("'cluster_ip': '{0}'".format(ip))
+            dict_kvs.append("'racnodelist': '{0}'".format(ip))
+        else:
+            dict_kvs.append("'cluster_ip': None")
+            dict_kvs.append("'racnodelist': None")
+
+        oracle_sid = self.oracle_servers[hostname]['databases'][database]['oracle_sid']
+        oracle_home = self.oracle_servers[hostname]['databases'][database]['oracle_home']
+        oracle_path = oracle_home + '/bin'
+        tnsadmindir = oracle_home + '/network/admin'
+        dict_kvs.append("'oracle_user': 'oracle'")
+        dict_kvs.append("'oracle_pass': '12!pass345'")
+        dict_kvs.append("'oracle_sid': '{0}'".format(oracle_sid))
+        dict_kvs.append("'oracle_home': '{0}'".format(oracle_home))
+        dict_kvs.append("'oracle_path': '{0}'".format(oracle_path))
+        dict_kvs.append("'po_databasesid': 'achild'")
+        dict_kvs.append("'po_username': 'oracle'")
+        dict_kvs.append("'po_orahome': '{0}'".format(oracle_home))
+        dict_kvs.append("'po_tnsadmindir': '{0}'".format(tnsadmindir))
+        dict_kvs.append("'po_totalmemory': '800'")
+        dict_kvs.append("'po_sgapct': '70'")
+
+        # Join elements together into python code dictionary format
+        variables = ', '.join(dict_kvs)
+        variables_string = 'variables = {' + variables + '}'
+
+        # This is what the final .py file will look like
+        lines = []
+        lines.append('from rf_inventory import get_host_variables')
+        lines.append('')
+        lines.append(variables_string)
+        lines.append('')
+        lines.append('')
+        lines.append("def get_variables(prepend=None, append=None, delimiter='.', base=variables):")
+        lines.append("    return get_host_variables(base=base, prepend=prepend, append=append, delimiter=delimiter)")
+
+        # Write to file
+        filename = self.oracle_servers[hostname]['databases'][database]['inventory_file']
+        file_path = 'inv/host/{0}'.format(filename)
+        with open(file_path, 'w') as f:
+            for line in lines:
+                f.write(line + '\n')
+        print('Created inv/host{0}'.format(filename))
+
+    def create_all_inventory(self):
+        for hostname, host_dict in self.oracle_servers.items():
+            for dbname, db_dict in host_dict['databases'].items():
+                self.create_inventory_file(hostname, dbname)
+        print('All inventory files have been created in ./inv/host')
+
+
 class ExecutionPlanner(YamlLoader):
     """ Create aliases file and aliases.sh from executions file """
     def __init__(self):
@@ -62,11 +141,10 @@ class ExecutionPlanner(YamlLoader):
 
     def _create_alias(self, host, database, appliance, variables='', test='suites/ora2/logsmart_mounts1.robot', layer='', execution=''):
         appliance_py = self.appliances[appliance]['inventory_file']
-        db_py = ''
-        for db_dict in self.oracle_servers[host]['databases']:
-            if database in db_dict.keys():
-                db_py = db_dict[database]['inventory_file']
-        if not db_py:
+
+        try:
+            db_py = self.oracle_servers[host]['databases'][database]['inventory_file']
+        except KeyError:
             raise RuntimeError('Database name: {0} not found for host {1}'.format(database, host))
 
         alias_name = '[{0}_{1}_{2}_{3}]'.format(host, database, execution, layer)
@@ -114,10 +192,10 @@ class CSVGenerator(YamlLoader):
             uds_version = self.test_plan[host_name]['branch']
             appliance = self.test_plan[host_name]['appliance']
 
-            for database in self.oracle_servers[host_name]['databases']:
-                oracle_sid = database.values()[0]['oracle_sid']
-                oracle_version = database.values()[0]['version']
-                testlink_platform = database.values()[0]['testlink_platform']
+            for k, database in self.oracle_servers[host_name]['databases'].items():
+                oracle_sid = database['oracle_sid']
+                oracle_version = database['version']
+                testlink_platform = database['testlink_platform']
                 final_rows.append([platform, testlink_platform, oracle_version, oracle_sid, host_name, ipaddress, uds_version, appliance,
                                   '', ''])
         final_rows.sort(key=lambda x: x[0])
@@ -177,8 +255,10 @@ class OracleCleaner(YamlLoader):
             password = self.oracle_servers[host_name]['oracle_pass']
         except KeyError:
             password = '12!pass345'
-        homes = [database.values()[0]['oracle_home'] for database in self.oracle_servers[host_name]['databases']]
-        sids = [database.values()[0]['oracle_sid'] for database in self.oracle_servers[host_name]['databases']]
+        homes = [database['oracle_home'] for k, database in
+                 self.oracle_servers[host_name]['databases'].items()]
+        sids = [database['oracle_sid'] for k, database in
+                self.oracle_servers[host_name]['databases'].items()]
         return ipaddress, password, homes, sids
 
 
@@ -188,50 +268,6 @@ class TestPlanner(YamlLoader):
     """
     def __init__(self):
         super(TestPlanner, self).__init__()
-
-    def create_aliases(self, filename='aliases'):
-        lines, names = self._create_aliases()
-        with open(filename, 'w') as f:
-            for line in lines:
-                f.write(line + '\n')
-        with open('{0}.sh'.format(filename), 'w') as f:
-            for name in names:
-                execution_string = 'nohup python rbc.py {0} &'.format(name)
-                f.write(execution_string + '\n')
-
-    def _create_alias(self, host, database, appliance, test='suites/ora2/logsmart_mounts1.robot'):
-        appliance_py = self.appliances[appliance]['inventory_file']
-        db_py = ''
-        for db_dict in self.oracle_servers[host]['databases']:
-            if database in db_dict.keys():
-                db_py = db_dict[database]['inventory_file']
-        if not db_py:
-            raise RuntimeError('Database name: {0} not found for host {1}'.format(database, host))
-
-        alias_name = '[{0}_{1}]'.format(host, database)
-        alias_string = 'inv/appliance/{0} inv/host/{1}:host1 inv/host/{1}:host2 {2}'.format(appliance_py, db_py, test)
-        return alias_name, alias_string
-
-    def _create_aliases(self):
-        alias_lines = []
-        alias_names = []
-        for host_name, config in self.test_plan.items():
-            # Ignore 'connectors' key in yml file
-            if host_name == 'connectors':
-                continue
-            # Create aliases for all databases
-            for db_dict in self.oracle_servers[host_name]['databases']:
-                host = host_name
-                database = db_dict.keys()[0]
-                appliance = config['appliance']
-                alias_definition, alias_string = self._create_alias(host, database, appliance)
-                alias_name = alias_definition.strip('[').strip(']')
-                alias_names.append(alias_name)
-                alias_lines.append(alias_definition)
-                alias_lines.append(alias_string)
-                alias_lines.append('')
-
-        return alias_lines, alias_names
 
 
 class UpgradeController(YamlLoader):
@@ -513,6 +549,20 @@ if __name__ == '__main__':
                     se.execute_permissions_check(sys.argv[2])
                 else:
                     print('Unknown script name')
+
+        # Create RobotFramework inventory file for given host and database
+        elif arg.lower() in ['mkinv']:
+            if len(sys.argv) > 3:
+                ic = HostInventoryCreator()
+                ic.create_inventory_file(sys.argv[2], sys.argv[3])
+            else:
+                if len(sys.argv) > 2:
+                    if sys.argv[2] in ['all', '-a', 'ALL']:
+                        ic = HostInventoryCreator()
+                        ic.create_all_inventory()
+                else:
+                    print('To create inventory file: ore mkinv <hostname> <dbname>')
+                    print('To create all inventory files: ore mkinv all')
 
         # Create aliases file using data from plan.yml and executions.yml
         elif arg.lower() in ['aliases']:

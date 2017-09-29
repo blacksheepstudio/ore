@@ -1,0 +1,264 @@
+[hpvm1_hpracdb_mounts_nonlogsmart_osauth_layer1]
+inv/appliance/bopeep.py inv/host/hpvm1.py:host1 inv/host/hpvm1.py:host2 logsmart=False suites/ora2/logsmart_mounts1.robot
+
+[atmlpar9_ix11R2db_mounts_nonlogsmart_osauth_layer1]
+inv/appliance/bopeep.py inv/host/atmlpar9-ix11R2db.py:host1 inv/host/atmlpar9-ix11R2db.py:host2 logsmart=False suites/ora2/logsmart_mounts1.robot
+
+[bb6aix3_bb12rcdb_mounts_nonlogsmart_osauth_layer1]
+inv/appliance/bopeep.py inv/host/bb6aix3.py:host1 inv/host/bb6aix3.py:host2 logsmart=False suites/ora2/logsmart_mounts1.robot
+
+[ore-rhel11g-1_oriondb_mounts_nonlogsmart_osauth_layer1]
+inv/appliance/orasky3.py inv/host/ore-rhel11g-1.py:host1 inv/host/ore-rhel11g-1.py:host2 logsmart=False suites/ora2/logsmart_mounts1.robot
+
+[atmlpar4_atmlpar4fs_mounts_nonlogsmart_osauth_layer1]
+inv/appliance/bopeep.py inv/host/atmlpar4-atmlpar4fs.py:host1 inv/host/atmlpar4-atmlpar4fs.py:host2 logsmart=False suites/ora2/logsmart_mounts1.robot
+
+[rh66orarac1_ora111db_mounts_nonlogsmart_osauth_layer1]
+inv/appliance/orasky3.py inv/host/rh66orarac1-ora111db.py:host1 inv/host/rh66orarac1-ora111db.py:host2 logsmart=False suites/ora2/logsmart_mounts1.robot
+
+[sun08-03_sol12pdb_mounts_nonlogsmart_osauth_layer1]
+inv/appliance/orasky3.py inv/host/sun08-03.py:host1 inv/host/sun08-03.py:host2 logsmart=False suites/ora2/logsmart_mounts1.robot
+
+[nstlpar24_ora111db_mounts_nonlogsmart_osauth_layer1]
+inv/appliance/bopeep.py inv/host/NSTLPAR24_ora111db.py:host1 inv/host/NSTLPAR24_ora111db.py:host2 logsmart=False suites/ora2/logsmart_mounts1.robot
+
+[sun08-01_ora111db_mounts_nonlogsmart_osauth_layer1]
+inv/appliance/orasky3.py inv/host/sun08-01-ora111db.py:host1 inv/host/sun08-01-ora111db.py:host2 logsmart=False suites/ora2/logsmart_mounts1.robot
+
+[hpdbvm21_hp121pdb_mounts_nonlogsmart_osauth_layer1]
+inv/appliance/bopeep.py inv/host/hpdbvm21.py:host1 inv/host/hpdbvm21.py:host2 logsmart=False suites/ora2/logsmart_mounts1.robot
+
+[ndm4-vm_tengfs_mounts_nonlogsmart_osauth_layer1]
+inv/appliance/orasky3.py inv/host/ndm4-vm-tengfs.py:host1 inv/host/ndm4-vm-tengfs.py:host2 logsmart=False suites/ora2/logsmart_mounts1.robot
+
+[hpvm1_orafsdb_mounts_nonlogsmart_osauth_layer2]
+inv/appliance/bopeep.py inv/host/hpvm1-orafsdb.py:host1 inv/host/hpvm1-orafsdb.py:host2 logsmart=False suites/ora2/logsmart_mounts1.robot
+
+[atmlpar9_ax12cdb_mounts_nonlogsmart_osauth_layer2]
+inv/appliance/bopeep.py inv/host/atmlpar9-ax12cdb.py:host1 inv/host/atmlpar9-ax12cdb.py:host2 logsmart=False suites/ora2/logsmart_mounts1.robot
+
+[atmlpar4_atm4longname_mounts_nonlogsmart_osauth_layer2]
+inv/appliance/bopeep.py inv/host/atmlpar4-atm4longname.py:host1 inv/host/atmlpar4-atm4longname.py:host2 logsmart=False suites/ora2/logsmart_mounts1.robot
+
+[rh66orarac1_demondb_mounts_nonlogsmart_osauth_layer2]
+inv/appliance/orasky3.py inv/host/rh66orarac1.py:host1 inv/host/rh66orarac1.py:host2 logsmart=False suites/ora2/logsmart_mounts1.robot
+
+[sun08-03_sol11gdb_mounts_nonlogsmart_osauth_layer2]
+inv/appliance/orasky3.py inv/host/sun08-03_sol11gdb.py:host1 inv/host/sun08-03_sol11gdb.py:host2 logsmart=False suites/ora2/logsmart_mounts1.robot
+
+[nstlpar24_autodb_mounts_nonlogsmart_osauth_layer2]
+inv/appliance/bopeep.py inv/host/NSTLPAR24_KT.py:host1 inv/host/NSTLPAR24_KT.py:host2 logsmart=False suites/ora2/logsmart_mounts1.robot
+
+[sun08-01_soldb_mounts_nonlogsmart_osauth_layer2]
+inv/appliance/orasky3.py inv/host/sun08-01.py:host1 inv/host/sun08-01.py:host2 logsmart=False suites/ora2/logsmart_mounts1.robot
+
+[hpdbvm21_hp11R2db_mounts_nonlogsmart_osauth_layer2]
+inv/appliance/bopeep.py inv/host/hpdbvm21-hp11R2db:host1 inv/host/hpdbvm21-hp11R2db:host2 logsmart=False suites/ora2/logsmart_mounts1.robot
+
+[ndm4-vm_ort205db_mounts_nonlogsmart_osauth_layer2]
+inv/appliance/orasky3.py inv/host/ndm4-vm-ort205db.py:host1 inv/host/ndm4-vm-ort205db.py:host2 logsmart=False suites/ora2/logsmart_mounts1.robot
+
+[nstlpar24_ora112fsdb_mounts_nonlogsmart_osauth_layer3]
+inv/appliance/bopeep.py inv/host/NSTLPAR24_ora112fsdb.py:host1 inv/host/NSTLPAR24_ora112fsdb.py:host2 logsmart=False suites/ora2/logsmart_mounts1.robot
+
+[sun08-01_solfsdb_mounts_nonlogsmart_osauth_layer3]
+inv/appliance/orasky3.py inv/host/sun08-01-solfsdb.py:host1 inv/host/sun08-01-solfsdb.py:host2 logsmart=False suites/ora2/logsmart_mounts1.robot
+
+[hpvm1_hpracdb_mounts_dbauth_layer1]
+inv/appliance/bopeep.py inv/host/hpvm1.py:host1 inv/host/hpvm1.py:host2 authentication=db suites/ora2/logsmart_mounts1.robot
+
+[atmlpar9_ix11R2db_mounts_dbauth_layer1]
+inv/appliance/bopeep.py inv/host/atmlpar9-ix11R2db.py:host1 inv/host/atmlpar9-ix11R2db.py:host2 authentication=db suites/ora2/logsmart_mounts1.robot
+
+[bb6aix3_bb12rcdb_mounts_dbauth_layer1]
+inv/appliance/bopeep.py inv/host/bb6aix3.py:host1 inv/host/bb6aix3.py:host2 authentication=db suites/ora2/logsmart_mounts1.robot
+
+[ore-rhel11g-1_oriondb_mounts_dbauth_layer1]
+inv/appliance/orasky3.py inv/host/ore-rhel11g-1.py:host1 inv/host/ore-rhel11g-1.py:host2 authentication=db suites/ora2/logsmart_mounts1.robot
+
+[atmlpar4_atmlpar4fs_mounts_dbauth_layer1]
+inv/appliance/bopeep.py inv/host/atmlpar4-atmlpar4fs.py:host1 inv/host/atmlpar4-atmlpar4fs.py:host2 authentication=db suites/ora2/logsmart_mounts1.robot
+
+[rh66orarac1_ora111db_mounts_dbauth_layer1]
+inv/appliance/orasky3.py inv/host/rh66orarac1-ora111db.py:host1 inv/host/rh66orarac1-ora111db.py:host2 authentication=db suites/ora2/logsmart_mounts1.robot
+
+[sun08-03_sol12pdb_mounts_dbauth_layer1]
+inv/appliance/orasky3.py inv/host/sun08-03.py:host1 inv/host/sun08-03.py:host2 authentication=db suites/ora2/logsmart_mounts1.robot
+
+[nstlpar24_ora111db_mounts_dbauth_layer1]
+inv/appliance/bopeep.py inv/host/NSTLPAR24_ora111db.py:host1 inv/host/NSTLPAR24_ora111db.py:host2 authentication=db suites/ora2/logsmart_mounts1.robot
+
+[sun08-01_ora111db_mounts_dbauth_layer1]
+inv/appliance/orasky3.py inv/host/sun08-01-ora111db.py:host1 inv/host/sun08-01-ora111db.py:host2 authentication=db suites/ora2/logsmart_mounts1.robot
+
+[hpdbvm21_hp121pdb_mounts_dbauth_layer1]
+inv/appliance/bopeep.py inv/host/hpdbvm21.py:host1 inv/host/hpdbvm21.py:host2 authentication=db suites/ora2/logsmart_mounts1.robot
+
+[ndm4-vm_tengfs_mounts_dbauth_layer1]
+inv/appliance/orasky3.py inv/host/ndm4-vm-tengfs.py:host1 inv/host/ndm4-vm-tengfs.py:host2 authentication=db suites/ora2/logsmart_mounts1.robot
+
+[hpvm1_orafsdb_mounts_dbauth_layer2]
+inv/appliance/bopeep.py inv/host/hpvm1-orafsdb.py:host1 inv/host/hpvm1-orafsdb.py:host2 authentication=db suites/ora2/logsmart_mounts1.robot
+
+[atmlpar9_ax12cdb_mounts_dbauth_layer2]
+inv/appliance/bopeep.py inv/host/atmlpar9-ax12cdb.py:host1 inv/host/atmlpar9-ax12cdb.py:host2 authentication=db suites/ora2/logsmart_mounts1.robot
+
+[atmlpar4_atm4longname_mounts_dbauth_layer2]
+inv/appliance/bopeep.py inv/host/atmlpar4-atm4longname.py:host1 inv/host/atmlpar4-atm4longname.py:host2 authentication=db suites/ora2/logsmart_mounts1.robot
+
+[rh66orarac1_demondb_mounts_dbauth_layer2]
+inv/appliance/orasky3.py inv/host/rh66orarac1.py:host1 inv/host/rh66orarac1.py:host2 authentication=db suites/ora2/logsmart_mounts1.robot
+
+[sun08-03_sol11gdb_mounts_dbauth_layer2]
+inv/appliance/orasky3.py inv/host/sun08-03_sol11gdb.py:host1 inv/host/sun08-03_sol11gdb.py:host2 authentication=db suites/ora2/logsmart_mounts1.robot
+
+[nstlpar24_autodb_mounts_dbauth_layer2]
+inv/appliance/bopeep.py inv/host/NSTLPAR24_KT.py:host1 inv/host/NSTLPAR24_KT.py:host2 authentication=db suites/ora2/logsmart_mounts1.robot
+
+[sun08-01_soldb_mounts_dbauth_layer2]
+inv/appliance/orasky3.py inv/host/sun08-01.py:host1 inv/host/sun08-01.py:host2 authentication=db suites/ora2/logsmart_mounts1.robot
+
+[hpdbvm21_hp11R2db_mounts_dbauth_layer2]
+inv/appliance/bopeep.py inv/host/hpdbvm21-hp11R2db:host1 inv/host/hpdbvm21-hp11R2db:host2 authentication=db suites/ora2/logsmart_mounts1.robot
+
+[ndm4-vm_ort205db_mounts_dbauth_layer2]
+inv/appliance/orasky3.py inv/host/ndm4-vm-ort205db.py:host1 inv/host/ndm4-vm-ort205db.py:host2 authentication=db suites/ora2/logsmart_mounts1.robot
+
+[nstlpar24_ora112fsdb_mounts_dbauth_layer3]
+inv/appliance/bopeep.py inv/host/NSTLPAR24_ora112fsdb.py:host1 inv/host/NSTLPAR24_ora112fsdb.py:host2 authentication=db suites/ora2/logsmart_mounts1.robot
+
+[sun08-01_solfsdb_mounts_dbauth_layer3]
+inv/appliance/orasky3.py inv/host/sun08-01-solfsdb.py:host1 inv/host/sun08-01-solfsdb.py:host2 authentication=db suites/ora2/logsmart_mounts1.robot
+
+[hpvm1_hpracdb_mounts_default_layer1]
+inv/appliance/bopeep.py inv/host/hpvm1.py:host1 inv/host/hpvm1.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[atmlpar9_ix11R2db_mounts_default_layer1]
+inv/appliance/bopeep.py inv/host/atmlpar9-ix11R2db.py:host1 inv/host/atmlpar9-ix11R2db.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[bb6aix3_bb12rcdb_mounts_default_layer1]
+inv/appliance/bopeep.py inv/host/bb6aix3.py:host1 inv/host/bb6aix3.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[ore-rhel11g-1_oriondb_mounts_default_layer1]
+inv/appliance/orasky3.py inv/host/ore-rhel11g-1.py:host1 inv/host/ore-rhel11g-1.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[atmlpar4_atmlpar4fs_mounts_default_layer1]
+inv/appliance/bopeep.py inv/host/atmlpar4-atmlpar4fs.py:host1 inv/host/atmlpar4-atmlpar4fs.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[rh66orarac1_ora111db_mounts_default_layer1]
+inv/appliance/orasky3.py inv/host/rh66orarac1-ora111db.py:host1 inv/host/rh66orarac1-ora111db.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[sun08-03_sol12pdb_mounts_default_layer1]
+inv/appliance/orasky3.py inv/host/sun08-03.py:host1 inv/host/sun08-03.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[nstlpar24_ora111db_mounts_default_layer1]
+inv/appliance/bopeep.py inv/host/NSTLPAR24_ora111db.py:host1 inv/host/NSTLPAR24_ora111db.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[sun08-01_ora111db_mounts_default_layer1]
+inv/appliance/orasky3.py inv/host/sun08-01-ora111db.py:host1 inv/host/sun08-01-ora111db.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[hpdbvm21_hp121pdb_mounts_default_layer1]
+inv/appliance/bopeep.py inv/host/hpdbvm21.py:host1 inv/host/hpdbvm21.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[ndm4-vm_tengfs_mounts_default_layer1]
+inv/appliance/orasky3.py inv/host/ndm4-vm-tengfs.py:host1 inv/host/ndm4-vm-tengfs.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[hpvm1_orafsdb_mounts_default_layer2]
+inv/appliance/bopeep.py inv/host/hpvm1-orafsdb.py:host1 inv/host/hpvm1-orafsdb.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[atmlpar9_ax12cdb_mounts_default_layer2]
+inv/appliance/bopeep.py inv/host/atmlpar9-ax12cdb.py:host1 inv/host/atmlpar9-ax12cdb.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[atmlpar4_atm4longname_mounts_default_layer2]
+inv/appliance/bopeep.py inv/host/atmlpar4-atm4longname.py:host1 inv/host/atmlpar4-atm4longname.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[rh66orarac1_demondb_mounts_default_layer2]
+inv/appliance/orasky3.py inv/host/rh66orarac1.py:host1 inv/host/rh66orarac1.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[sun08-03_sol11gdb_mounts_default_layer2]
+inv/appliance/orasky3.py inv/host/sun08-03_sol11gdb.py:host1 inv/host/sun08-03_sol11gdb.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[nstlpar24_autodb_mounts_default_layer2]
+inv/appliance/bopeep.py inv/host/NSTLPAR24_KT.py:host1 inv/host/NSTLPAR24_KT.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[sun08-01_soldb_mounts_default_layer2]
+inv/appliance/orasky3.py inv/host/sun08-01.py:host1 inv/host/sun08-01.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[hpdbvm21_hp11R2db_mounts_default_layer2]
+inv/appliance/bopeep.py inv/host/hpdbvm21-hp11R2db:host1 inv/host/hpdbvm21-hp11R2db:host2 suites/ora2/logsmart_mounts1.robot
+
+[ndm4-vm_ort205db_mounts_default_layer2]
+inv/appliance/orasky3.py inv/host/ndm4-vm-ort205db.py:host1 inv/host/ndm4-vm-ort205db.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[nstlpar24_ora112fsdb_mounts_default_layer3]
+inv/appliance/bopeep.py inv/host/NSTLPAR24_ora112fsdb.py:host1 inv/host/NSTLPAR24_ora112fsdb.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[sun08-01_solfsdb_mounts_default_layer3]
+inv/appliance/orasky3.py inv/host/sun08-01-solfsdb.py:host1 inv/host/sun08-01-solfsdb.py:host2 suites/ora2/logsmart_mounts1.robot
+
+[hpvm1_hpracdb_mounts_nonlogsmart_dbauth_layer1]
+inv/appliance/bopeep.py inv/host/hpvm1.py:host1 inv/host/hpvm1.py:host2 logsmart=False authentication=db suites/ora2/logsmart_mounts1.robot
+
+[atmlpar9_ix11R2db_mounts_nonlogsmart_dbauth_layer1]
+inv/appliance/bopeep.py inv/host/atmlpar9-ix11R2db.py:host1 inv/host/atmlpar9-ix11R2db.py:host2 logsmart=False authentication=db suites/ora2/logsmart_mounts1.robot
+
+[bb6aix3_bb12rcdb_mounts_nonlogsmart_dbauth_layer1]
+inv/appliance/bopeep.py inv/host/bb6aix3.py:host1 inv/host/bb6aix3.py:host2 logsmart=False authentication=db suites/ora2/logsmart_mounts1.robot
+
+[ore-rhel11g-1_oriondb_mounts_nonlogsmart_dbauth_layer1]
+inv/appliance/orasky3.py inv/host/ore-rhel11g-1.py:host1 inv/host/ore-rhel11g-1.py:host2 logsmart=False authentication=db suites/ora2/logsmart_mounts1.robot
+
+[atmlpar4_atmlpar4fs_mounts_nonlogsmart_dbauth_layer1]
+inv/appliance/bopeep.py inv/host/atmlpar4-atmlpar4fs.py:host1 inv/host/atmlpar4-atmlpar4fs.py:host2 logsmart=False authentication=db suites/ora2/logsmart_mounts1.robot
+
+[rh66orarac1_ora111db_mounts_nonlogsmart_dbauth_layer1]
+inv/appliance/orasky3.py inv/host/rh66orarac1-ora111db.py:host1 inv/host/rh66orarac1-ora111db.py:host2 logsmart=False authentication=db suites/ora2/logsmart_mounts1.robot
+
+[sun08-03_sol12pdb_mounts_nonlogsmart_dbauth_layer1]
+inv/appliance/orasky3.py inv/host/sun08-03.py:host1 inv/host/sun08-03.py:host2 logsmart=False authentication=db suites/ora2/logsmart_mounts1.robot
+
+[nstlpar24_ora111db_mounts_nonlogsmart_dbauth_layer1]
+inv/appliance/bopeep.py inv/host/NSTLPAR24_ora111db.py:host1 inv/host/NSTLPAR24_ora111db.py:host2 logsmart=False authentication=db suites/ora2/logsmart_mounts1.robot
+
+[sun08-01_ora111db_mounts_nonlogsmart_dbauth_layer1]
+inv/appliance/orasky3.py inv/host/sun08-01-ora111db.py:host1 inv/host/sun08-01-ora111db.py:host2 logsmart=False authentication=db suites/ora2/logsmart_mounts1.robot
+
+[hpdbvm21_hp121pdb_mounts_nonlogsmart_dbauth_layer1]
+inv/appliance/bopeep.py inv/host/hpdbvm21.py:host1 inv/host/hpdbvm21.py:host2 logsmart=False authentication=db suites/ora2/logsmart_mounts1.robot
+
+[ndm4-vm_tengfs_mounts_nonlogsmart_dbauth_layer1]
+inv/appliance/orasky3.py inv/host/ndm4-vm-tengfs.py:host1 inv/host/ndm4-vm-tengfs.py:host2 logsmart=False authentication=db suites/ora2/logsmart_mounts1.robot
+
+[hpvm1_orafsdb_mounts_nonlogsmart_dbauth_layer2]
+inv/appliance/bopeep.py inv/host/hpvm1-orafsdb.py:host1 inv/host/hpvm1-orafsdb.py:host2 logsmart=False authentication=db suites/ora2/logsmart_mounts1.robot
+
+[atmlpar9_ax12cdb_mounts_nonlogsmart_dbauth_layer2]
+inv/appliance/bopeep.py inv/host/atmlpar9-ax12cdb.py:host1 inv/host/atmlpar9-ax12cdb.py:host2 logsmart=False authentication=db suites/ora2/logsmart_mounts1.robot
+
+[atmlpar4_atm4longname_mounts_nonlogsmart_dbauth_layer2]
+inv/appliance/bopeep.py inv/host/atmlpar4-atm4longname.py:host1 inv/host/atmlpar4-atm4longname.py:host2 logsmart=False authentication=db suites/ora2/logsmart_mounts1.robot
+
+[rh66orarac1_demondb_mounts_nonlogsmart_dbauth_layer2]
+inv/appliance/orasky3.py inv/host/rh66orarac1.py:host1 inv/host/rh66orarac1.py:host2 logsmart=False authentication=db suites/ora2/logsmart_mounts1.robot
+
+[sun08-03_sol11gdb_mounts_nonlogsmart_dbauth_layer2]
+inv/appliance/orasky3.py inv/host/sun08-03_sol11gdb.py:host1 inv/host/sun08-03_sol11gdb.py:host2 logsmart=False authentication=db suites/ora2/logsmart_mounts1.robot
+
+[nstlpar24_autodb_mounts_nonlogsmart_dbauth_layer2]
+inv/appliance/bopeep.py inv/host/NSTLPAR24_KT.py:host1 inv/host/NSTLPAR24_KT.py:host2 logsmart=False authentication=db suites/ora2/logsmart_mounts1.robot
+
+[sun08-01_soldb_mounts_nonlogsmart_dbauth_layer2]
+inv/appliance/orasky3.py inv/host/sun08-01.py:host1 inv/host/sun08-01.py:host2 logsmart=False authentication=db suites/ora2/logsmart_mounts1.robot
+
+[hpdbvm21_hp11R2db_mounts_nonlogsmart_dbauth_layer2]
+inv/appliance/bopeep.py inv/host/hpdbvm21-hp11R2db:host1 inv/host/hpdbvm21-hp11R2db:host2 logsmart=False authentication=db suites/ora2/logsmart_mounts1.robot
+
+[ndm4-vm_ort205db_mounts_nonlogsmart_dbauth_layer2]
+inv/appliance/orasky3.py inv/host/ndm4-vm-ort205db.py:host1 inv/host/ndm4-vm-ort205db.py:host2 logsmart=False authentication=db suites/ora2/logsmart_mounts1.robot
+
+[nstlpar24_ora112fsdb_mounts_nonlogsmart_dbauth_layer3]
+inv/appliance/bopeep.py inv/host/NSTLPAR24_ora112fsdb.py:host1 inv/host/NSTLPAR24_ora112fsdb.py:host2 logsmart=False authentication=db suites/ora2/logsmart_mounts1.robot
+
+[sun08-01_solfsdb_mounts_nonlogsmart_dbauth_layer3]
+inv/appliance/orasky3.py inv/host/sun08-01-solfsdb.py:host1 inv/host/sun08-01-solfsdb.py:host2 logsmart=False authentication=db suites/ora2/logsmart_mounts1.robot
+

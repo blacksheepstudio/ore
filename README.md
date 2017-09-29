@@ -92,10 +92,9 @@ ndm4-vm:
 Finally you must edit the executions.yml, this is the most important part:
 
 **Terms**
-    - Layers:
-        A layer is a set of tests that will all run IN PARALLEL
-    - Execution Profile:
-        Combining a set of Layers, a robot suite, and any number of parameters for test run.
+
+- Layers: A layer is a set of tests that will all run IN PARALLEL
+- Execution Profile: Combining a set of Layers, a robot suite, and any number of parameters for test run.
     
 First let's create a set of layers.
 A Layer is any number of hosts/databases that can run in parallel, without disrupting each other:

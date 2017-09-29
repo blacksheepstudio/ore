@@ -25,13 +25,12 @@ ndm4-vm:
   branch: trunk
   appliance: orasky3
 
-# ora12c1:
-#  branch: trunk
-# appliance: orasky3
+ora12c1:
+  branch: trunk
+  appliance: orasky3
 
-#
-## AIX
-#
+# AIX
+
 bb6aix3:
   branch: trunk
   appliance: bopeep
@@ -48,7 +47,6 @@ atmlpar9:
   branch: trunk
   appliance: bopeep
 
-#
 # HPUX
 
 hpvm1:

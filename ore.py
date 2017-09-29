@@ -18,26 +18,6 @@ class YamlLoader(object):
         self.executions = yaml.load(open('yaml/executions.yml'))
 
 
-class ScriptExecutor(YamlLoader):
-    def __init__(self):
-        super(ScriptExecutor, self).__init__()
-
-    def execute_permissions_check(self, host_name):
-        ipaddress = self.oracle_servers[host_name]['ipaddress']
-        connection = HostConnection(ipaddress)
-
-        print('** Sending scripts to {0}'.format(host_name))
-        connection.scp_script('host_scripts/chkperms.sh')
-        connection.scp_script('host_scripts/chkperms.txt')
-
-        print('** Executing: /tmp/chkperms.sh')
-        connection.raw('chmod 777 /tmp/chkperms.sh; chmod 777 /tmp/chkperms.txt')
-        r = connection.raw('cd /tmp; ./chkperms.sh')
-        print(r[1])
-        for line in r[0]:
-            print(line.strip('\n'))
-
-
 class HostInventoryCreator(YamlLoader):
     """ Create Oracle RobotFrameWork inventory files on the fly """
     def __init__(self):
@@ -428,6 +408,26 @@ class UpgradeController(YamlLoader):
         gpg_name = 'connector-{0}-{1}.{2}'.format(platform_name, connector_version, platform_format)
         gpg_full_path = '{0}/{1}'.format(branch_path, gpg_name)
         return gpg_full_path, gpg_name
+
+
+class ScriptExecutor(YamlLoader):
+    def __init__(self):
+        super(ScriptExecutor, self).__init__()
+
+    def execute_permissions_check(self, host_name):
+        ipaddress = self.oracle_servers[host_name]['ipaddress']
+        connection = HostConnection(ipaddress)
+
+        print('** Sending scripts to {0}'.format(host_name))
+        connection.scp_script('host_scripts/chkperms.sh')
+        connection.scp_script('host_scripts/chkperms.txt')
+
+        print('** Executing: /tmp/chkperms.sh')
+        connection.raw('chmod 777 /tmp/chkperms.sh; chmod 777 /tmp/chkperms.txt')
+        r = connection.raw('cd /tmp; ./chkperms.sh')
+        print(r[1])
+        for line in r[0]:
+            print(line.strip('\n'))
 
 
 class HostConnection(object):

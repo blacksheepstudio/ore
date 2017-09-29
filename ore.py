@@ -269,7 +269,7 @@ class OracleCleaner(YamlLoader):
                                                     "name like '%background_dump_dest%'")[0]['VALUE'].strip('/trace')
                 print('Executing: rm -rf /{0}/alert/*; rm -rf /{0}/trace/*'.format(diag_dest))
                 if not test:
-                    ##### Safety procedures
+                    # Safety procedures
                     try:
                         assert sid in diag_dest or 'log' in diag_dest
                         assert diag_dest != '/'

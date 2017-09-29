@@ -473,6 +473,7 @@ def print_help():
     print('*** Oracle Regression Environment Manager ***')
     print('[TestPlan commands]')
     print(' ore mkcsv: create blank testplan csv file')
+    print(' ore mkinv: create RobotFramework inventory for hosts')
     print(' ore aliases: create rbc aliases file from executions.yml')
     print('')
     print('[Host connector upgrade commands]')

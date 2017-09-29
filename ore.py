@@ -68,7 +68,8 @@ class HostInventoryCreator(YamlLoader):
         lines.append('')
         lines.append('')
         lines.append("def get_variables(prepend=None, append=None, delimiter='.', base=variables):")
-        lines.append("    return get_appliance_variables(base=base, prepend=prepend, append=append, delimiter=delimiter)")
+        lines.append("    return get_appliance_variables(base=base, prepend=prepend, "
+                     "append=append, delimiter=delimiter)")
 
         # Write to file
         filename = hostname + '.py'
@@ -177,7 +178,8 @@ class ExecutionPlanner(YamlLoader):
                     execution_string = 'nohup python rbc.py {0} &'.format(name)
                     f.write(execution_string + '\n')
 
-    def _create_alias(self, host, database, appliance, variables='', test='suites/ora2/logsmart_mounts1.robot', layer='', execution=''):
+    def _create_alias(self, host, database, appliance, variables='',
+                      test='suites/ora2/logsmart_mounts1.robot', layer='', execution=''):
         appliance_py = self.appliances[appliance]['inventory_file']
 
         try:
@@ -200,7 +202,8 @@ class ExecutionPlanner(YamlLoader):
             database = hostname_dict['database']
             appliance = self.test_plan[host]['appliance']
             variables = self.executions['executions'][execution_name]['variables']
-            alias_definition, alias_string = self._create_alias(host, database, appliance, variables, layer=layer, execution=execution_name)
+            alias_definition, alias_string = self._create_alias(host, database, appliance, variables,
+                                                                layer=layer, execution=execution_name)
             print(alias_definition)
             print(alias_string)
             alias_name = alias_definition.strip('[').strip(']')
@@ -234,7 +237,8 @@ class CSVGenerator(YamlLoader):
                 oracle_sid = database['oracle_sid']
                 oracle_version = database['version']
                 testlink_platform = database['testlink_platform']
-                final_rows.append([platform, testlink_platform, oracle_version, oracle_sid, host_name, ipaddress, uds_version, appliance,
+                final_rows.append([platform, testlink_platform, oracle_version, oracle_sid,
+                                   host_name, ipaddress, uds_version, appliance,
                                   '', ''])
         final_rows.sort(key=lambda x: x[0])
         final_rows.insert(0, column_labels)

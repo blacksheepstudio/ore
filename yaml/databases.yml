@@ -233,7 +233,7 @@ hpdbvm21:
       testlink_platform: "HPUX 12c RAC ASM"
 
     hp11R2db:
-      inventory_file: "hpdbvm21-hp11R2db"
+      inventory_file: "hpdbvm21-hp11R2db.py"
       oracle_sid: "hp11R2db1"
       oracle_home: "/oracle/11.2.0/product/dbhome_1"
       version: "11.2"

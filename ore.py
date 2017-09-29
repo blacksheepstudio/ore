@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import sys
 import pprint
-
 from lib.utils import HostInventoryCreator, ExecutionPlanner, CSVGenerator, \
     OracleCleaner, TestPlanner, UpgradeController, ScriptExecutor
 

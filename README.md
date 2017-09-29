@@ -53,6 +53,13 @@ atmlpar4:
         testlink_platform: "AIX 6.1 Oracle 11g FS"
 ```
 
+Once you have added all your databases and sky, create robot framework inventory for them:
+
+*Issue this command from terminal:*
+> python ore.py mkinv all
+
+If you check in ./inv you should see a host and appliance directory, now filled with RobotFramework inventory.
+
 **Step 5)**
 Edit plan.yml and create your appliance/connector version matrix:
     

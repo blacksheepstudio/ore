@@ -43,6 +43,41 @@ class HostInventoryCreator(YamlLoader):
     def __init__(self):
         super(HostInventoryCreator, self).__init__()
 
+    def create_appliance_inventory_file(self, hostname):
+        """ Creates appliance inventory file """
+
+        appliance = self.appliances[hostname]
+        appliance_ip = appliance['ipaddress']
+        dict_kvs = []
+        dict_kvs.append("'hostname': '{0}'".format(hostname))
+        dict_kvs.append("'appliance_ip': '{0}'".format(appliance_ip))
+        dict_kvs.append("'user': 'admin'")
+        dict_kvs.append("'pass': 'password'")
+        dict_kvs.append("'ssh_user': 'root'")
+        dict_kvs.append("'ssh_pass': 'actifio2'")
+
+        # Join elements together into python code dictionary format
+        variables = ', '.join(dict_kvs)
+        variables_string = 'variables = {' + variables + '}'
+
+        # This is what the final .py file will look like
+        lines = []
+        lines.append('from rf_inventory import get_appliance_variables')
+        lines.append('')
+        lines.append(variables_string)
+        lines.append('')
+        lines.append('')
+        lines.append("def get_variables(prepend=None, append=None, delimiter='.', base=variables):")
+        lines.append("    return get_appliance_variables(base=base, prepend=prepend, append=append, delimiter=delimiter)")
+
+        # Write to file
+        filename = hostname + '.py'
+        file_path = 'inv/appliance/{0}'.format(filename)
+        with open(file_path, 'w') as f:
+            for line in lines:
+                f.write(line + '\n')
+        print('Created appliance inventory: inv/appliance/{0}'.format(filename))
+
     def create_inventory_file(self, hostname, database):
         """
         Creates an inventory file given a hostname and database
@@ -114,7 +149,10 @@ class HostInventoryCreator(YamlLoader):
         for hostname, host_dict in self.oracle_servers.items():
             for dbname, db_dict in host_dict['databases'].items():
                 self.create_inventory_file(hostname, dbname)
-        print('All inventory files have been created in ./inv/host')
+        print('All host inventory files have been created in ./inv/host')
+        for hostname, app_dict in self.appliances.items():
+            self.create_appliance_inventory_file(hostname)
+        print('All appliance inventory files have been created in ./inv/appliance')
 
 
 class ExecutionPlanner(YamlLoader):
@@ -474,7 +512,7 @@ def print_help():
     print('')
     print('[TestPlan commands]')
     print(' ore mkcsv: create blank testplan csv file')
-    print(' ore mkinv: create RobotFramework inventory for hosts')
+    print(' ore mkinv: create RobotFramework inventory for hosts/appliances')
     print(' ore aliases: create rbc aliases file from executions.yml')
     print('')
     print('[Host connector upgrade commands]')

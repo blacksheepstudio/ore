@@ -407,7 +407,7 @@ class UpgradeController(YamlLoader):
         out, err, rc = a.raw(install_command)
         print(err, rc)
 
-        print('Cat /act/etc/key.txt ****')
+        print('cat /act/etc/key.txt ****')
         out, err, rc = a.raw('cat /act/etc/key.txt')
         print(out)
 

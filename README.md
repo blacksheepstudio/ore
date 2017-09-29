@@ -162,14 +162,11 @@ You are now running robot tests.
 
 You must wait for layer1 to complete, before you can copy and paste all the executions of layer2.
 
+*While tests are running, their output will be sent to ./logs/<alias_name>.txt*
+
+*Once a test has completed it will go to ./logs/<today's date>/<alias_name>.txt|html|xml*
+
 --------------
-**Test Notes**
-
-While tests are running, their output will be sent to ./logs/<alias_name>.txt
-
-Once a test has completed it will go to ./logs/<today's date>/<alias_name>.txt|html|xml
-
-
 **Extra**
 
 If you have created all the configuration files correctly, with no errors,

@@ -2,13 +2,12 @@
 
 ## Guide for use:
 
-** Purpose of ore.py **
 Use ORE to:
 - Manage environment containing multiple Oracle hosts with many databases
 - Prepare RobotFramework test execution plans across hosts (in conjunction with RBC)
 - Upgrade and monitor connectors on hosts in environment
 
-# How to start running tests:
+## How to start running tests:
 
 Before we are ready to run tests on our Oracle environment, we must make all the hosts/appliances/plans
 known to ORE.
@@ -167,7 +166,7 @@ You must wait for layer1 to complete, before you can copy and paste all the exec
 *Once a test has completed it will go to ./logs/<today's date>/<alias_name>.txt|html|xml*
 
 --------------
-**Extra**
+###More Info
 
 If you have created all the configuration files correctly, with no errors,
 you should now be able to do a lot of things with ore.

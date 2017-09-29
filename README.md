@@ -166,7 +166,7 @@ You must wait for layer1 to complete, before you can copy and paste all the exec
 *Once a test has completed it will go to ./logs/<today's date>/<alias_name>.txt|html|xml*
 
 --------------
-###More Info
+### More Info
 
 If you have created all the configuration files correctly, with no errors,
 you should now be able to do a lot of things with ore.

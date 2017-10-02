@@ -323,6 +323,18 @@ class UpgradeController(YamlLoader):
         # List all running databases
         r = a.raw('ps -ef | grep [p]mon')
         databases = [line.split('pmon_')[1].strip('\n') for line in r[0]]
+
+        # Verify that all expected DBs are running, and there are no extra DBs running
+        accepted_dbs = ['+ASM1', '+MGMT1']
+        expected_sids = [database['oracle_sid'] for k, database in self.oracle_servers[host_name]['databases'].items()]
+        extra_dbs = [sid for sid in databases if sid not in expected_sids and sid not in accepted_dbs]
+        missing_dbs = [sid for sid in expected_sids if sid not in databases]
+
+        if missing_dbs:
+            print('WARN: Databases are not running: {0}'.format(missing_dbs))
+        if extra_dbs:
+            print('WARN: Unknown Databases running: {0}'.format(extra_dbs))
+
         return connector, platform, databases
 
     def upgrade_connector(self, host_name, config):

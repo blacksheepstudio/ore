@@ -325,7 +325,7 @@ class UpgradeController(YamlLoader):
         databases = [line.split('pmon_')[1].strip('\n') for line in r[0]]
 
         # Verify that all expected DBs are running, and there are no extra DBs running
-        accepted_dbs = ['+ASM1', '+MGMT1']
+        accepted_dbs = ['+ASM1', '+ASM', '-MGMTDB']
         expected_sids = [database['oracle_sid'] for k, database in self.oracle_servers[host_name]['databases'].items()]
         extra_dbs = [sid for sid in databases if sid not in expected_sids and sid not in accepted_dbs]
         missing_dbs = [sid for sid in expected_sids if sid not in databases]

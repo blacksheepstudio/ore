@@ -18,7 +18,7 @@ This is done by editing four yamls: **appliances.yml, databases.yml, plan.yml, e
         [Framework3](https://git.build.actifio.com/testing_tools/framework3)
 
 **Step 2)**
-    Make sure your rbc_settings.py variables are all set correctly.
+    Make sure your rbc_settings.yml variables are all set correctly.
     
 **Step 3)** 
 Edit appliances.yml with entries for each appliance, e.g:

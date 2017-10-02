@@ -4,6 +4,26 @@
 # Each database must have a name, an inventory_file, an oracle_sid, and oracle_home,
 # a version, and a testlink_platform.
 
+# Example:
+#nstlpar24:
+#  ipaddress: "172.27.8.90"
+#  platform: "AIX"
+#  databases:
+#    autodb:
+#      inventory_file: "NSTLPAR24_KT.py"
+#      oracle_sid: "autodb1"
+#      oracle_home: "/database/11.2.0/product/dbhome_1"
+#      version: "11.2"
+#      testlink_platform: "AIX 6.1 Oracle 11g RAC ASM"
+#
+#    ora111db:
+#      inventory_file: "NSTLPAR24_ora111db.py"
+#      oracle_sid: "ora111db"
+#      oracle_home: "/home/oracle/app/product/11.1.0"
+#      version: "11.1"
+#      testlink_platform: "AIX 6.1 Oracle 11g RAC ASM"
+
+
 # AIX
 nstlpar24:
   ipaddress: "172.27.8.90"
@@ -37,6 +57,7 @@ nstlpar24:
       version: "11.2"
       testlink_platform: "AIX 6.1 Oracle 11g FS"
 
+
 bb6aix3:
   ipaddress: "172.16.199.53"
   platform: "AIX"
@@ -47,6 +68,7 @@ bb6aix3:
       oracle_home: "/oracle/12.1.0/product/dbhome_1"
       version: "12.1"
       testlink_platform: "AIX 6.1 Oracle 12c RAC ASM"
+
 
 atmlpar4:
   ipaddress: "172.27.36.20"
@@ -66,6 +88,15 @@ atmlpar4:
       version: "11.2"
       testlink_platform: "AIX 6.1 Oracle 11g FS"
 
+    # Dataguard Database (Primary is on atmlpar9)
+    x112dgdb:
+      inventory_file: "atmlpar4-x112dgdr.py"
+      oracle_sid: "x112dgdr"
+      oracle_home: "/u01/ordb/oracle/product/11.2.0"
+      version: "11.2"
+      testlink_platform: "AIX 6.1 Oracle 11g RAC ASM"
+
+
 atmlpar9:
   ipaddress: "172.27.36.34"
   platform: "AIX"
@@ -83,6 +114,15 @@ atmlpar9:
       oracle_home: "/u01/orahome/12.1.0/product/dbhome_1"
       version: "12.1"
       testlink_platform: "AIX 6.1 Oracle 12c RAC ASM"
+
+    # Dataguard Primary DB (Dont run tests on this)
+#    x112dgdb:
+#      inventory_file: "atmlpar9-x112dgdb.py"
+#      oracle_sid: "x112dgdb1"
+#      oracle_home: "/u01/orahome/11.2.0/product/dbhome_1"
+#      version: "11.2"
+#      testlink_platform: "AIX 6.1 Oracle 11g RAC ASM"
+
 
 # Solaris
 sun08-01:
@@ -117,6 +157,7 @@ sun08-01:
       version: "11.2"
       testlink_platform: "Solaris 11.3 Oracle 11g FS"
 
+
 sun08-03:
   ipaddress: "172.27.20.18"
   platform: "Solaris"
@@ -134,6 +175,7 @@ sun08-03:
       oracle_home: "/oracle/11.2.0/product/dbhome_1"
       version: "11.2"
       testlink_platform: "Solaris 11.3 Oracle 11g RAC ASM"
+
 
 # Linux
 rh66orarac1:
@@ -154,6 +196,15 @@ rh66orarac1:
       version: "11.1"
       testlink_platform: "RH 6 Oracle 11g RAC ASM"
 
+    # Dataguard Database (primary is on ora12c1)
+    dg112gdb:
+      inventory_file: "rh66orarac1_dg112gdb.py"
+      oracle_sid: "dg112gdr1"
+      oracle_home: "/database/oracle/app/oracle/product/11.2.0/dbhome_1"
+      version: "11.2"
+      testlink_platform: "RH 6 Oracle 11g RAC ASM"
+
+
 ndm4-vm:
   ipaddress: "172.27.11.211"
   platform: "Linux"
@@ -172,6 +223,7 @@ ndm4-vm:
       version: "10.5"
       testlink_platform: "RH 6 Oracle 10g RAC FS"
 
+
 ore-rhel11g-1:
   ipaddress: "172.27.20.246"
   platform: "Linux"
@@ -183,8 +235,8 @@ ore-rhel11g-1:
       version: "11.2"
       testlink_platform: "RH 6 Oracle 11g FS"
 
+
 ora12c1:
-  # Dataguard databases
   ipaddress: "172.17.200.213"
   platform: "Linux"
   databases:
@@ -195,12 +247,14 @@ ora12c1:
       version: "12.2"
       testlink_platform: "RH 7 Oracle 12c RAC ASM"
 
-    dg112gdb:
-      inventory_file: "ora12c1_dg112gdb.py"
-      oracle_sid: "dg112gdb1"
-      oracle_home: "/oracle/app/11.2.0/dbhome_1"
-      version: "11.2"
-      testlink_platform: "RH 7 Oracle 11g RAC ASM"
+    # Dataguard Primary (do not run test on this DB)
+#    dg112gdb:
+#      inventory_file: "ora12c1_dg112gdb.py"
+#      oracle_sid: "dg112gdb1"
+#      oracle_home: "/oracle/app/11.2.0/dbhome_1"
+#      version: "11.2"
+#      testlink_platform: "RH 7 Oracle 11g RAC ASM"
+
 
 # HPUX
 hpvm1:
@@ -234,6 +288,7 @@ hpvm1:
       oracle_home: "/orahome/app/11.2.0/product/dbhome_1"
       version: "10.2"
       testlink_platform: "HPUX 10g RAC ASM"
+
 
 hpdbvm21:
   ipaddress: "172.16.159.73"

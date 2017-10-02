@@ -197,26 +197,35 @@ class CSVGenerator(YamlLoader):
         super(CSVGenerator, self).__init__()
 
     def create_csv(self, filename='plan.csv'):
-        column_labels = ['platform', 'testlink_platform', 'oracle_version', 'oracle_sid', 'host_name', 'ipaddress',
-                          'uds_version', 'appliance', 'result', 'notes']
+        column_labels = ['platform', 'host_name', 'ipaddress', 'oracle_version', 'oracle_sid',
+                         'appliance', 'dbauth result', 'osauth result', 'non-logmsart result',
+                         'osauth non-logsmart result']
 
         final_rows = []
         host_names = [host for host in self.test_plan.keys() if host != 'connectors']
         for host_name in host_names:
             ipaddress = self.oracle_servers[host_name]['ipaddress']
             platform = self.oracle_servers[host_name]['platform']
-            uds_version = self.test_plan[host_name]['branch']
             appliance = self.test_plan[host_name]['appliance']
 
             for k, database in self.oracle_servers[host_name]['databases'].items():
                 oracle_sid = database['oracle_sid']
                 oracle_version = database['version']
-                testlink_platform = database['testlink_platform']
-                final_rows.append([platform, testlink_platform, oracle_version, oracle_sid,
-                                   host_name, ipaddress, uds_version, appliance,
-                                  '', ''])
+                final_rows.append([platform, host_name, ipaddress, oracle_version, oracle_sid,
+                                   appliance, '', '', '', ''])
         final_rows.sort(key=lambda x: x[0])
         final_rows.insert(0, column_labels)
+
+        # Add gap in between rows where the platform has changed
+        insert_indexes = []
+        for i, row in enumerate(final_rows):
+            try:
+                if final_rows[i+1][0] != row[0]:
+                    insert_indexes.append(i+1)
+            except IndexError:
+                continue
+        for i, index in enumerate(insert_indexes):
+            final_rows.insert(index+i, ['', '', '', '', '', '', '', '', '', ''])
 
         with open(filename, 'w') as myfile:
             wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)

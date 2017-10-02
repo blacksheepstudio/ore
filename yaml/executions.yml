@@ -51,6 +51,8 @@ layers:
       database: orafsdb
     hpdbvm21:
       database: hp11R2db
+    ora12c1:
+      database: ora12xdb
 
   layer3:
     nstlpar24:

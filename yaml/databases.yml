@@ -35,6 +35,7 @@ nstlpar24:
       oracle_home: "/database/11.2.0/product/dbhome_1"
       version: "11.2"
       testlink_platform: "AIX 6.1 Oracle 11g RAC ASM"
+      configuration: "1-node rac"
 
     ora111db:
       inventory_file: "NSTLPAR24_ora111db.py"
@@ -42,6 +43,7 @@ nstlpar24:
       oracle_home: "/home/oracle/app/product/11.1.0"
       version: "11.1"
       testlink_platform: "AIX 6.1 Oracle 11g RAC ASM"
+      configuration: "1-node rac"
 
     ten205db:
       inventory_file: "NSTLPAR24_ten205db1.py"
@@ -49,6 +51,7 @@ nstlpar24:
       oracle_home: "/ora10gr2home/db/OraHome_1"
       version: "10.5"
       testlink_platform: "AIX 6.1 Oracle 10g RAC ASM"
+      configuration: "1-node rac"
 
     ora112fsdb:
       inventory_file: "NSTLPAR24_ora112fsdb.py"
@@ -56,6 +59,7 @@ nstlpar24:
       oracle_home: "/database/11.2.0/product/dbhome_1"
       version: "11.2"
       testlink_platform: "AIX 6.1 Oracle 11g FS"
+      configuration: "filesystem"
 
 
 bb6aix3:
@@ -68,6 +72,7 @@ bb6aix3:
       oracle_home: "/oracle/12.1.0/product/dbhome_1"
       version: "12.1"
       testlink_platform: "AIX 6.1 Oracle 12c RAC ASM"
+      configuration: "2-node rac"
 
 
 atmlpar4:
@@ -80,6 +85,7 @@ atmlpar4:
       oracle_home: "/u01/ordb/oracle/product/11.2.0"
       version: "11.2"
       testlink_platform: "AIX 6.1 Oracle 11g RAC ASM"
+      configuration: "1-node rac"
 
     atmlpar4fs:
       inventory_file: "atmlpar4-atmlpar4fs.py"
@@ -87,6 +93,7 @@ atmlpar4:
       oracle_home: "/u01/ordb/oracle/product/11.2.0"
       version: "11.2"
       testlink_platform: "AIX 6.1 Oracle 11g FS"
+      configuration: "filesystem"
 
     # Dataguard Database (Primary is on atmlpar9)
     x112dgdb:
@@ -95,6 +102,7 @@ atmlpar4:
       oracle_home: "/u01/ordb/oracle/product/11.2.0"
       version: "11.2"
       testlink_platform: "AIX 6.1 Oracle 11g RAC ASM"
+      configuration: "1-node dg"
 
 
 atmlpar9:
@@ -107,6 +115,7 @@ atmlpar9:
       oracle_home: "/u01/orahome/11.2.0/product/dbhome_1"
       version: "11.2"
       testlink_platform: "AIX 6.1 Oracle 11g RAC ASM"
+      configuration: "2-node rac"
 
     ax12cdb:
       inventory_file: "atmlpar9-ax12cdb.py"
@@ -114,6 +123,7 @@ atmlpar9:
       oracle_home: "/u01/orahome/12.1.0/product/dbhome_1"
       version: "12.1"
       testlink_platform: "AIX 6.1 Oracle 12c RAC ASM"
+      configuration: "2-node rac"
 
     # Dataguard Primary DB (Dont run tests on this)
 #    x112dgdb:
@@ -135,6 +145,7 @@ sun08-01:
       oracle_home: "/oracle/product/11.2.0/dbhome_1"
       version: "11.2"
       testlink_platform: "Solaris 11.3 Oracle 11g RAC ASM"
+      configuration: "1-node rac"
 
     ora111db:
       inventory_file: "sun08-01-ora111db.py"
@@ -142,6 +153,7 @@ sun08-01:
       oracle_home: "/oracle/product/11.1.0"
       version: "11.1"
       testlink_platform: "Solaris 11.3 Oracle 11g RAC ASM"
+      configuration: "1-node rac"
 
     tensoldb:
       inventory_file: "sun08-01-tensoldb.py"
@@ -149,6 +161,7 @@ sun08-01:
       oracle_home: "/oracle/product/10.2.0/db_1"
       version: "10.5"
       testlink_platform: "Solaris 11.3 Oracle 10g RAC ASM"
+      configuration: "1-node rac"
 
     solfsdb:
       inventory_file: "sun08-01-solfsdb.py"
@@ -156,6 +169,7 @@ sun08-01:
       oracle_home: "/oracle/product/11.2.0/dbhome_1"
       version: "11.2"
       testlink_platform: "Solaris 11.3 Oracle 11g FS"
+      configuration: "filesystem"
 
 
 sun08-03:
@@ -168,6 +182,7 @@ sun08-03:
       oracle_home: "/oracle/12.1.0/product/dbhome_1"
       version: "12.1"
       testlink_platform: "Solaris 11.3 Oracle 12c RAC ASM"
+      configuration: "1-node rac"
 
     sol11gdb:
       inventory_file: "sun08-03_sol11gdb.py"
@@ -175,6 +190,7 @@ sun08-03:
       oracle_home: "/oracle/11.2.0/product/dbhome_1"
       version: "11.2"
       testlink_platform: "Solaris 11.3 Oracle 11g RAC ASM"
+      configuration: "1-node rac"
 
 
 # Linux
@@ -188,6 +204,7 @@ rh66orarac1:
       oracle_home: "/database/oracle/app/oracle/product/11.2.0/dbhome_1"
       version: "11.2"
       testlink_platform: "RH 6 Oracle 11g RAC ASM"
+      configuration: "2-node rac"
 
     ora111db:
       inventory_file: "rh66orarac1-ora111db.py"
@@ -195,6 +212,7 @@ rh66orarac1:
       oracle_home: "/database/oracle/app/oracle/product/11.1.0/dbhome_1"
       version: "11.1"
       testlink_platform: "RH 6 Oracle 11g RAC ASM"
+      configuration: "2-node rac"
 
     # Dataguard Database (primary is on ora12c1)
     dg112gdb:
@@ -203,6 +221,7 @@ rh66orarac1:
       oracle_home: "/database/oracle/app/oracle/product/11.2.0/dbhome_1"
       version: "11.2"
       testlink_platform: "RH 6 Oracle 11g RAC ASM"
+      configuration: "2-node dg"
 
 
 ndm4-vm:
@@ -215,6 +234,7 @@ ndm4-vm:
       oracle_home: "/u01/app/oracle/product/10.2.0/db_1"
       version: "10.5"
       testlink_platform: "RH 6 Oracle 10g RAC ASM"
+      configuration: "1-node rac"
 
     tengfs:
       inventory_file: "ndm4-vm-tengfs.py"
@@ -222,6 +242,7 @@ ndm4-vm:
       oracle_home: "/u01/app/oracle/product/10.2.0/db_1"
       version: "10.5"
       testlink_platform: "RH 6 Oracle 10g RAC FS"
+      configuration: "filesystem"
 
 
 ore-rhel11g-1:
@@ -234,6 +255,7 @@ ore-rhel11g-1:
       oracle_home: "/u01/app/oracle/product/11.2.0.3/db_1"
       version: "11.2"
       testlink_platform: "RH 6 Oracle 11g FS"
+      configuration: "configuration"
 
 
 ora12c1:
@@ -246,6 +268,7 @@ ora12c1:
       oracle_home: "/oracle/app/12.2.0/dbhome_1"
       version: "12.2"
       testlink_platform: "RH 7 Oracle 12c RAC ASM"
+      configuration: "2-node rac"
 
     # Dataguard Primary (do not run test on this DB)
 #    dg112gdb:
@@ -267,6 +290,7 @@ hpvm1:
       oracle_home: "/orahome/app/11.2.0/product/dbhome_1"
       version: "11.2"
       testlink_platform: "HPUX 11.31 Oracle 11g RAC ASM"
+      configuration: "2-node rac"
 
     ora111db:
       inventory_file: "hpvm1-ora111db.py"
@@ -274,6 +298,7 @@ hpvm1:
       oracle_home: "/orahome/oracle/product/11.1.0"
       version: "11.1"
       testlink_platform: "HPUX 11.31 Oracle 11g RAC ASM"
+      configuration: "2-node rac"
 
     orafsdb:
       inventory_file: "hpvm1-orafsdb.py"
@@ -281,6 +306,7 @@ hpvm1:
       oracle_home: "/orahome/app/11.2.0/product/dbhome_1"
       version: "11.2"
       testlink_platform: "HPUX 11g FS"
+      configuration: "filesystem"
 
     ora10gdb:
       inventory_file: "hpvm1-ora10gdb.py"
@@ -288,6 +314,7 @@ hpvm1:
       oracle_home: "/orahome/app/11.2.0/product/dbhome_1"
       version: "10.2"
       testlink_platform: "HPUX 10g RAC ASM"
+      configuration: "2-node rac"
 
 
 hpdbvm21:
@@ -300,6 +327,7 @@ hpdbvm21:
       oracle_home: "/oracle/12.1.0/product/dbhome_1"
       version: "12.1"
       testlink_platform: "HPUX 12c RAC ASM"
+      configuration: "2-node rac"
 
     hp11R2db:
       inventory_file: "hpdbvm21-hp11R2db.py"
@@ -307,3 +335,4 @@ hpdbvm21:
       oracle_home: "/oracle/11.2.0/product/dbhome_1"
       version: "11.2"
       testlink_platform: "HPUX 11g RAC ASM"
+      configuration: "2-node rac"

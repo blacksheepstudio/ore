@@ -1370,8 +1370,8 @@ class OracleLib(object):
         stdin, stdout, stderr = self.client.exec_command(command, timeout=60)
         stdin.close()
         if ascii:
-            stdout_final = [line for line in stdout.read().splitlines()]
-            stderr_final = [line for line in stderr.read().splitlines()]
+            stdout_final = [line.decode("utf-8") for line in stdout.read().splitlines()]
+            stderr_final = [line.decode("utf-8") for line in stderr.read().splitlines()]
         else:
             stdout_final = stdout.readlines()
             stderr_final = stderr.readlines()

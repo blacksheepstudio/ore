@@ -25,7 +25,8 @@ def print_help():
     print(' ore lshost <hostname>: gather host information from given host')
     print(' ore lshosts <hostname>: gather host information from all hosts')
     print('')
-    print('[Host cleanup commands]')
+    print('[Host management commands]')
+    print(' ore sqlplus <hostname> <database> <command>: issue sqlplus command')
     print(' ore cleanuplogs <hostname>: cleans up archivelogs')
     print(' ore cleanupdiag <hostname>: cleans up trace, audit files')
     print(' ore cleanup<type> all: cleans up all hosts in databases.yml')
@@ -72,6 +73,16 @@ if __name__ == '__main__':
                     oc.cleanup_diag(sys.argv[2], test=False)
                 except KeyError:
                     print('Host not found!')
+
+        # Issue SQLPlus command in given database
+        elif arg.lower() in ['sqlplus', 'sql']:
+            if len(sys.argv) < 5:
+                print('Format: ore sqlplus <hostname> <database> <command>')
+            else:
+                hostname = sys.argv[2]
+                dbname = sys.argv[3]
+                command = sys.argv[4]
+                oc.issue_sqlplus_command(hostname, dbname, command)
 
         # Upgrade given connector on given host
         elif arg.lower() in ['upgradehost', 'upgrade']:

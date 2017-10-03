@@ -237,6 +237,21 @@ class OracleCleaner(YamlLoader):
     def __init__(self):
         super(OracleCleaner, self).__init__()
 
+    def issue_sqlplus_command(self, host_name, database_name, command):
+        """ Issue a sqlplus command on the host, after sourcing the given database's variables """
+        database = self.oracle_servers[host_name]['databases'][database_name]
+        ipaddress = self.oracle_servers[host_name]['ipaddress']
+        home = database['oracle_home']
+        sid = database['oracle_sid']
+        try:
+            password = database['oracle_pass']
+        except KeyError:
+            password = '12!pass345'
+
+        oracle_connection = OracleLib.OracleLib(ipaddress, sid=sid, home=home, password=password)
+        r = oracle_connection.sqlplus(command)
+        print(r)
+
     def cleanup_diag(self, host_name, test=True):
         """ This command will query the background_dump_dest in the database then, as Oracle user will
         issue rm -rf commands on the data within the trace and audit folders.
@@ -329,6 +344,7 @@ class UpgradeController(YamlLoader):
         expected_sids = [database['oracle_sid'] for k, database in self.oracle_servers[host_name]['databases'].items()]
         extra_dbs = [sid for sid in databases if sid not in expected_sids and sid not in accepted_dbs]
         missing_dbs = [sid for sid in expected_sids if sid not in databases]
+        databases = [database for database in databases if database not in accepted_dbs]
 
         if missing_dbs:
             print('WARN: Databases are not running: {0}'.format(missing_dbs))

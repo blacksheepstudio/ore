@@ -136,7 +136,7 @@ executions:
       - layer1
       - layer2
       - layer3
-    suite: suites/ora2/logsmart_mounts1.robot
+    suite: suites/ora2/mounts.robot
     variables:
 
   mounts_dbauth:
@@ -145,8 +145,8 @@ executions:
       - layer1
       - layer2
       - layer3
-    suite: suites/ora2/logsmart_mounts1.robot
-    variables: authentication=db
+    suite: suites/ora2/mounts.robot
+    variables: oracle_authentication=db
 
   mounts_nonlogsmart_osauth:
     label: run mount suite with os auth, and non-logsmart policy
@@ -154,8 +154,8 @@ executions:
       - layer1
       - layer2
       - layer3
-    suite: suites/ora2/logsmart_mounts1.robot
-    variables: logsmart=False
+    suite: suites/ora2/mounts.robot
+    variables: policy_logsmart=false
 
   mounts_nonlogsmart_dbauth:
     label: run mount suite with db auth, and non-logsmart policy
@@ -163,19 +163,19 @@ executions:
       - layer1
       - layer2
       - layer3
-    suite: suites/ora2/logsmart_mounts1.robot
-    variables: logsmart=False authentication=db
+    suite: suites/ora2/mounts.robot
+    variables: policy_logsmart=false oracle_authentication=db
 
   mounts_default_filesystems:
     label: run mount suite against only filesystem databases
     layers:
       - layerfs
-    suite: suites/ora2/logsmart_mounts1.robot
+    suite: suites/ora2/mounts.robot
     variables:
 
   mounts_dbauth_filesystems:
     label: run mount suite against only filesystems with dbauth
     layers:
       - layerfs
-    suite: suites/ora2/logsmart_mounts1.robot
-    variables: authentication=db
+    suite: suites/ora2/mounts.robot
+    variables: oracle_authentication=db

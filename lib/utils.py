@@ -4,6 +4,8 @@ from lib.colors import bcolors
 from lib import OracleLib
 from lib.hostconnection import HostConnection
 
+cprint = bcolors().cprint
+
 
 class YamlLoader(object):
     def __init__(self):

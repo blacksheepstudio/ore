@@ -6,6 +6,9 @@ from lib.utils import HostInventoryCreator, ExecutionPlanner, CSVGenerator, \
 
 # CLI
 
+from lib.colors import bcolors
+cprint = bcolors().cprint
+
 
 def print_help():
     """ Display on-screen list of CLI options """

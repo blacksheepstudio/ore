@@ -350,9 +350,9 @@ class UpgradeController(YamlLoader):
         databases = [database for database in databases if database not in accepted_dbs]
 
         if missing_dbs:
-            bcolors.cprint('WARN: Databases are not running: {0}'.format(missing_dbs), 'red')
+            cprint('WARN: Databases are not running: {0}'.format(missing_dbs), 'red')
         if extra_dbs:
-            bcolors.cprint('WARN: Unknown Databases running: {0}'.format(extra_dbs), 'yellow')
+            cprint('WARN: Unknown Databases running: {0}'.format(extra_dbs), 'yellow')
 
         return connector, platform, databases
 

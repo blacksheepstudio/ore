@@ -278,7 +278,7 @@ class OracleCleaner(YamlLoader):
                         oracle_connection.issue_command_as_root('rm -rf /{0}/audit/*; '
                                                                 'rm -rf /{0}/trace/*'.format(diag_dest))
                     except AssertionError:
-                        print('- - WARNING: invalid diag dest: {0}'.format(diag_dest))
+                        cprint('- - WARNING: invalid diag dest: {0}'.format(diag_dest), 'red')
                         print('- - diag dest seems unsafe to rm -rf, Skipping ...')
                         continue
             except OracleLib.OracleError as e:

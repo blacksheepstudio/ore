@@ -33,12 +33,6 @@ def print_help():
     print(' ore cleanuplogs <hostname>: cleans up archivelogs')
     print(' ore cleanupdiag <hostname>: cleans up trace, audit files')
     print(' ore cleanup<type> all: cleans up all hosts in databases.yml')
-    print('')
-    print('[YAML info commands]')
-    print(' ore testplan : prints the oracle test plan to the screen')
-    print(' ore databases: prints all the hosts, databases, and their information')
-    print(' ore appliances: prints all the appliances, and their information')
-    print('')
 
 
 if __name__ == '__main__':

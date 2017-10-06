@@ -13,7 +13,7 @@ cprint = bcolors().cprint
 def print_help():
     """ Display on-screen list of CLI options """
     print('')
-    print('*** Oracle Regression Environment Manager ***')
+    cprint('*** Oracle Regression Environment Manager ***', 'bold')
     print('')
     cprint('[TestPlan commands]', 'yellow')
     print(' ore mkcsv: create blank testplan csv file')
@@ -28,7 +28,7 @@ def print_help():
     print(' ore lshost <hostname>: gather host information from given host')
     print(' ore lshosts <hostname>: gather host information from all hosts')
     print('')
-    cprint('[Host management commands]', 'left')
+    cprint('[Host management commands]', 'purple')
     print(' ore sqlplus <hostname> <database> <command>: issue sqlplus command')
     print(' ore cleanuplogs <hostname>: cleans up archivelogs')
     print(' ore cleanupdiag <hostname>: cleans up trace, audit files')

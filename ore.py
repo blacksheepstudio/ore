@@ -12,7 +12,7 @@ def print_help():
     print('')
     print('*** Oracle Regression Environment Manager ***')
     print('')
-    cprint('[TestPlan commands]', 'yellow'')
+    cprint('[TestPlan commands]', 'yellow')
     print(' ore mkcsv: create blank testplan csv file')
     print(' ore mkinv: create RobotFramework inventory for hosts/appliances')
     print(' ore aliases: create rbc aliases file from executions.yml')

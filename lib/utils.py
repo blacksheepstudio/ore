@@ -1,6 +1,6 @@
 import yaml
 import csv
-from lib import bcolors
+from lib.colors import bcolors
 from lib import OracleLib
 from lib.hostconnection import HostConnection
 

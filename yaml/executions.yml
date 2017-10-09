@@ -56,13 +56,13 @@ layers:
 
   layer3:
     nstlpar24:
-      database: ora112fsdb
+      database: or112fsdb
     sun08-01:
       database: solfsdb
 
   layerfs:
     nstlpar24:
-      database: ora112fsdb
+      database: or112fsdb
     atmlpar4:
       database: atmlpar4fs
     sun08-01:

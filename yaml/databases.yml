@@ -53,9 +53,9 @@ nstlpar24:
       testlink_platform: "AIX 6.1 Oracle 10g RAC ASM"
       configuration: "1-node rac"
 
-    ora112fsdb:
-      inventory_file: "NSTLPAR24_ora112fsdb.py"
-      oracle_sid: "ora112fsdb"
+    or112fsdb:
+      inventory_file: "NSTLPAR24_or112fsdb.py"
+      oracle_sid: "or112fsdb"
       oracle_home: "/database/11.2.0/product/dbhome_1"
       version: "11.2"
       testlink_platform: "AIX 6.1 Oracle 11g FS"

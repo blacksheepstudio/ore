@@ -1,8 +1,8 @@
 # Fill in with absolute paths to your resources
-aliases_file: /Users/actifioadmin/PycharmProjects/ore/aliases
-inv_dir: /Users/actifioadmin/PycharmProjects/ore/inv
-log_dir: /Users/actifioadmin/PycharmProjects/ore/logs
-framework3_dir: /Users/actifioadmin/PycharmProjects/framework3
+aliases_file: /home/ore/aliases
+inv_dir: /home/ore/inv
+log_dir: /home/ore/logs
+framework3_dir: /home/robo/dev/framework3
 
 # Place all test result logs in dated logs directory
 auto_archive_logs: True
@@ -13,4 +13,4 @@ recipients: ['leif.taylor@actifio.com']
 
 # Docker settings
 docker_repo: brianwilliams/framework3
-drobot_command: docker run -i -v <framework3_dir>:/home/testing -v <inv_dir>:/home/testing/robot/inv <docker_repo> robot -d . --log <HTMLFILE> --output <XMLFILE> --loglevel DEBUG:INFO
+drobot_command: docker run -i --privileged=true -v <framework3_dir>:/home/testing -v <inv_dir>:/home/testing/robot/inv <docker_repo> robot -d . --log <HTMLFILE> --output <XMLFILE> --loglevel DEBUG:INFO

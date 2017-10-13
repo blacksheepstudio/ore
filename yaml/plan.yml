@@ -4,7 +4,7 @@
 # You can create as many connector aliases as you want.
 
 connectors:
-  trunk: "https://garfield.build.actifio.com/files/builds/cdsky/trunk/8.0.0/8.0.0.1458/"
+  trunk: "https://garfield.build.actifio.com/files/builds/cdsky/trunk/8.0.0_old/8.0.0.1528/"
   sp713: "https://garfield.build.actifio.com/files/builds/cdsky/sp-7.1.3/7.1.3/7.1.3.273/"
   sp715: "https://garfield.build.actifio.com/files/builds/cdsky/sp-7.1.5/7.1.5/7.1.5.406/"
 

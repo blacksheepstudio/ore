@@ -56,72 +56,84 @@ layers:
 
   layer3:
     nstlpar24:
-      database: ora112fsdb
+      database: or112fsdb
     sun08-01:
       database: solfsdb
 
-  layerfs:
-    nstlpar24:
-      database: ora112fsdb
-    atmlpar4:
-      database: atmlpar4fs
-    sun08-01:
-      database: solfsdb
+  linux1:
+    rh66orarac1:
+      database: demondb
     ore-rhel11g-1:
       database: oriondb
-    ndm4-vm:
-      database: tengfs
-    hpvm1:
-      database: orafsdb
+    ora12c1:
+      database: ora12xdb 
 
-  layer10gr2:
-    nstlpar24:
-      database: ten205db
-    sun08-01:
-      database: tensoldb
-    ndm4-vm:
-      database: ort205db
-    hpvm1:
-      database: ora10gdb
-
-  layer11gr1:
-    nstlpar24:
-      database: ora111db
-    sun08-01:
-      database: ora111db
+  linux2:
     rh66orarac1:
       database: ora111db
-    hpvm1:
-      database: ora111db
 
-  layer11gr2:
-    nstlpar24:
-      database: autodb
-    atmlpar4:
-      database: atm4longname
-    atmlpar9:
-      database: ix11R2db
-    sun08-03:
-      database: sol11gdb
-    sun08-01:
-      database: soldb
-    hpvm1:
-      database: hpracdb
-    hpdbvm21:
-      database: hp11R2db
+#  layerfs:
+#    nstlpar24:
+#      database: or112fsdb
+#    atmlpar4:
+#      database: atmlpar4fs
+#    sun08-01:
+#      database: solfsdb
+#    ore-rhel11g-1:
+#      database: oriondb
+#    ndm4-vm:
+#      database: tengfs
+#    hpvm1:
+#      database: orafsdb
+
+#  layer10gr2:
+#    nstlpar24:
+#      database: ten205db
+#    sun08-01:
+#      database: tensoldb
+#    ndm4-vm:
+#      database: ort205db
+#    hpvm1:
+#      database: ora10gdb
+#
+##  layer11gr1:
+#    nstlpar24:
+#      database: ora111db
+#    sun08-01:
+#      database: ora111db
+#    rh66orarac1:
+#      database: ora111db
+#    hpvm1:
+#      database: ora111db
+
+#  layer11gr2:
+#    nstlpar24:
+#      database: autodb
+#    atmlpar4:
+#      database: atm4longname
+#    atmlpar9:
+#      database: ix11R2db
+#    sun08-03:
+#      database: sol11gdb
+#    sun08-01:
+#      database: soldb
+#    hpvm1:
+#      database: hpracdb
+#    hpdbvm21:
+#      database: hp11R2db
 
   # Missing Linux!
-  layer12cr1:
-    atmlpar9:
-      database: ax12cdb
-    bb6aix3:
-      database: bb12rcdb
-    sun08-03:
-      database: sol12pdb
+#  layer12cr1:
+#    atmlpar9:
+#      database: ax12cdb
+#    bb6aix3:
+#      database: bb12rcdb
+#    sun08-03:
+#      database: sol12pdb
 #    ore-oel72o12-4:
 #      database: ramadb
-    hpdbvm21:
-      database: hp121pdb
+#    hpdbvm21:
+#      database: hp121pdb
 
 
 # You must create execution profiles, which can contain any number of layers.
@@ -130,6 +142,14 @@ layers:
 # Choose any number of variables to add at execution time of the robot suite.
 
 executions:
+  mounts_dbauth_linux:
+    label: run dbauth on only linux hosts
+    layers:
+      - linux1
+      - linux2
+    suite: suites/ora2/mounts.robot
+    variables: oracle_authentication=db
+
   mounts_default:
     label: run mount suite with default options
     layers:
@@ -166,16 +186,16 @@ executions:
     suite: suites/ora2/mounts.robot
     variables: policy_logsmart=false oracle_authentication=db
 
-  mounts_default_filesystems:
-    label: run mount suite against only filesystem databases
-    layers:
-      - layerfs
-    suite: suites/ora2/mounts.robot
-    variables:
+#  mounts_default_filesystems:
+#    label: run mount suite against only filesystem databases
+#    layers:
+#      - layerfs
+#    suite: suites/ora2/mounts.robot
+#    variables:
 
-  mounts_dbauth_filesystems:
-    label: run mount suite against only filesystems with dbauth
-    layers:
-      - layerfs
-    suite: suites/ora2/mounts.robot
-    variables: oracle_authentication=db
+#  mounts_dbauth_filesystems:
+#    label: run mount suite against only filesystems with dbauth
+#    layers:
+#      - layerfs
+#    suite: suites/ora2/mounts.robot
+#    variables: oracle_authentication=db

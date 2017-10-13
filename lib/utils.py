@@ -77,10 +77,19 @@ class HostInventoryCreator(YamlLoader):
         dict_kvs = []
         dict_kvs.append("'name': '{}'".format(hostname))
         ip = self.oracle_servers[hostname]['ipaddress']
+        try:
+            system_user = self.oracle_servers[hostname]['databases'][database]['system_user']
+	    system_pass = self.oracle_servers[hostname]['databases'][database]['system_pass']
+        except KeyError:
+            system_user = 'sys'
+            system_pass = 'sysman00'
+
         dict_kvs.append("'ip': '{}'".format(ip))
         dict_kvs.append("'ssh_user': 'root'")
         dict_kvs.append("'ssh_pass': '12!pass345'")
         dict_kvs.append("'ssh_private_key_file': ''")
+        dict_kvs.append("'system_user': '{0}'".format(system_user))
+        dict_kvs.append("'system_pass': '{0}'".format(system_pass))
         dict_kvs.append("'app': '{0}'".format(database))
         dict_kvs.append("'app_type': 'Oracle'")
         dict_kvs.append("'apps': ['/', '{0}']".format(database))
@@ -180,8 +189,9 @@ class ExecutionPlanner(YamlLoader):
             database = hostname_dict['database']
             appliance = self.test_plan[host]['appliance']
             variables = self.executions['executions'][execution_name]['variables']
+            test = self.executions['executions'][execution_name]['suite']
             alias_definition, alias_string = self._create_alias(host, database, appliance, variables,
-                                                                layer=layer, execution=execution_name)
+                                                                layer=layer, test=test, execution=execution_name)
             print(alias_definition)
             print(alias_string)
             alias_name = alias_definition.strip('[').strip(']')

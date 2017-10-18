@@ -9,8 +9,8 @@
 
 layers:
   layer1:
-    nstlpar24:
-      database: ora111db
+#    nstlpar24:
+#      database: ora111db
     atmlpar4:
       database: atmlpar4fs
     atmlpar9:
@@ -33,8 +33,8 @@ layers:
       database: hp121pdb
 
   layer2:
-    nstlpar24:
-      database: autodb
+#    nstlpar24:
+#      database: autodb
     atmlpar4:
       database: atm4longname
     atmlpar9:
@@ -55,22 +55,26 @@ layers:
       database: ora12xdb
 
   layer3:
-    nstlpar24:
-      database: or112fsdb
+#    nstlpar24:
+#      database: or112fsdb
     sun08-01:
       database: solfsdb
 
-  linux1:
-    rh66orarac1:
-      database: demondb
-    ore-rhel11g-1:
-      database: oriondb
-    ora12c1:
-      database: ora12xdb 
+#  layerfs:
+#    nstlpar24:
+#      database: or112fsdb
+#    atmlpar4:
+#      database: atmlpar4fs
+#    sun08-01:
+#      database: solfsdb
+#    ore-rhel11g-1:
+#      database: oriondb
+#    ora12c1:
+#      database: ora12xdb 
 
-  linux2:
-    rh66orarac1:
-      database: ora111db
+#  linux2:
+#    rh66orarac1:
+#      database: ora111db
 
 #  layerfs:
 #    nstlpar24:
@@ -142,15 +146,7 @@ layers:
 # Choose any number of variables to add at execution time of the robot suite.
 
 executions:
-  mounts_dbauth_linux:
-    label: run dbauth on only linux hosts
-    layers:
-      - linux1
-      - linux2
-    suite: suites/ora2/mounts.robot
-    variables: oracle_authentication=db
-
-  mounts_default:
+  mounts_osauth:
     label: run mount suite with default options
     layers:
       - layer1
